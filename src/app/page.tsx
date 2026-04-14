@@ -6,14 +6,13 @@ export default function Home() {
       <ScrollReveal>
         <section className="space-y-5">
           <p className="font-mono text-sm text-foreground/60">
-            Hi, Im Baviri Setty Sai Deevan.
+            Hi, I am Baviri Setty Sai Deevan.
           </p>
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Developer building clean, reliable web apps.
+            Aspiring software engineer and lifelong learner.
           </h1>
           <p className="max-w-2xl text-base text-foreground/75 sm:text-lg">
-            I like working across the stack: front-end UI, APIs, databases, and
-            the little details that make products feel solid.
+            I enjoy building scalable applications, exploring systems, and cyber security. Currently a Computer Science student, I am passionate about software development and eager to contribute to impactful projects.
           </p>
 
           <div className="flex flex-wrap gap-3 pt-2">
@@ -38,13 +37,13 @@ export default function Home() {
           <div className="glass-surface glass-highlight glass-inner-border rounded-2xl p-5">
             <p className="font-mono text-xs text-foreground/60">Focus</p>
             <p className="mt-2 text-sm text-foreground/80">
-              Systems, web apps, and developer tooling.
+              Systems, Devops, Cyber Security, and Full-stack web development.
             </p>
           </div>
           <div className="glass-surface glass-highlight glass-inner-border rounded-2xl p-5">
             <p className="font-mono text-xs text-foreground/60">Stack</p>
             <p className="mt-2 text-sm text-foreground/80">
-              React / Next.js, Python, Django, SQL.
+              React / Next.js, Django, Python, C/C++, SQL, Tailwind CSS.
             </p>
           </div>
           <div className="glass-surface glass-highlight glass-inner-border rounded-2xl p-5">
