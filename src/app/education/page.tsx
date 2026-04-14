@@ -5,6 +5,7 @@ type EducationItem = {
   detail: string;
   start: string;
   end: string;
+  score?: string;
   highlights?: string[];
 };
 
@@ -15,12 +16,14 @@ export default function Education() {
       detail: "B.E Computer Science and Engineering (Cyber Security)",
       start: "Aug 2024",
       end: "May 2028",
+      score: "CGPA: 8.71",
     },
     {
       institution: "Vivekananda Vidyalaya Jr. College",
       detail: "Schooling",
       start: "Jun 2010",
       end: "Mar 2024",
+      score: "Percentage: 92.2%",
     },
   ];
 
@@ -65,6 +68,11 @@ export default function Education() {
                       <p className="mt-1 text-sm text-foreground/75">
                         {item.detail}
                       </p>
+                      {item.score ? (
+                        <p className="mt-2 font-mono text-xs text-foreground/60">
+                          {item.score}
+                        </p>
+                      ) : null}
                     </div>
 
                     <p className="font-mono text-xs text-foreground/60 sm:text-right">
