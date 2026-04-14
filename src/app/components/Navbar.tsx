@@ -12,8 +12,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
+    <nav className="sticky top-0 z-50">
+      <div className="glass-surface glass-highlight border-b border-foreground/10">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
         <Link
           href="/"
           className="font-mono text-sm text-foreground/80 hover:text-foreground"
@@ -44,6 +45,7 @@ export default function Navbar() {
               </Link>
             );
           })}
+        </div>
         </div>
       </div>
     </nav>

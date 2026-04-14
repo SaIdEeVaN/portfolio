@@ -1,15 +1,20 @@
+import ScrollReveal from "../components/ScrollReveal";
+
 export default function Contact() {
   return (
     <div className="space-y-8">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">Contact</h1>
-        <p className="max-w-2xl text-foreground/75">
-          Want to collaborate or chat? Reach out.
-        </p>
-      </header>
+      <ScrollReveal>
+        <header className="space-y-3">
+          <h1 className="text-3xl font-semibold tracking-tight">Contact</h1>
+          <p className="max-w-2xl text-foreground/75">
+            Want to collaborate or chat? Reach out.
+          </p>
+        </header>
+      </ScrollReveal>
 
-      <section className="rounded-xl border border-foreground/10 bg-foreground/5 p-5">
-        <dl className="space-y-4">
+      <ScrollReveal delayMs={80}>
+        <section className="glass-surface glass-highlight glass-inner-border rounded-2xl p-5">
+          <dl className="space-y-4">
           <div>
             <dt className="font-mono text-xs text-foreground/60">Email</dt>
             <dd className="mt-1 text-sm">
@@ -50,7 +55,8 @@ export default function Contact() {
             </dd>
           </div>
         </dl>
-      </section>
+        </section>
+      </ScrollReveal>
     </div>
   );
 }
