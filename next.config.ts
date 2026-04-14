@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         hostname: "cdn.jsdelivr.net",
         pathname: "/gh/devicons/devicon/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "/npm/simple-icons@*/icons/**",
+      },
+      {
+        protocol: "https",
+        hostname: "nmap.org",
+        pathname: "/images/**",
+      },
     ],
   },
 };
