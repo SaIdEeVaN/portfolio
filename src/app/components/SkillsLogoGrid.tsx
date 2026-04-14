@@ -35,6 +35,7 @@ export default function SkillsLogoGrid() {
                 width={22}
                 height={22}
                 alt={skill.name}
+                className="spin-slow"
               />
             </div>
             <p className="text-sm text-foreground/85">{skill.name}</p>

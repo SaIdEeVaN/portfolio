@@ -117,21 +117,6 @@ export default function Home() {
               find me in the Linux CLI (especially Debian) — building, breaking,
               and improving systems until they&apos;re reliable and secure.
             </p>
-
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href="#contact"
-                className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-              >
-                Contact
-              </a>
-              <a
-                href="#about"
-                className="rounded-md border border-foreground/15 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-foreground/10"
-              >
-                About
-              </a>
-            </div>
           </div>
         </ScrollReveal>
 
