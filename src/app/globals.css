@@ -31,6 +31,8 @@ body {
 
 html {
   text-rendering: geometricPrecision;
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
 }
 
 @layer components {
