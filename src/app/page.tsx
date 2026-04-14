@@ -2,7 +2,9 @@ export default function Home() {
   return (
     <div className="space-y-10">
       <section className="space-y-5">
-        <p className="font-mono text-sm text-foreground/60">Hi, I’m Sai.</p>
+        <p className="font-mono text-sm text-foreground/60">
+          Hi, Im Baviri Setty Sai Deevan.
+        </p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
           Developer building clean, reliable web apps.
         </h1>

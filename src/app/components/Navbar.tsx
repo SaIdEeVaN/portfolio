@@ -18,7 +18,10 @@ export default function Navbar() {
           href="/"
           className="font-mono text-sm text-foreground/80 hover:text-foreground"
         >
-          <span className="text-foreground">sai</span>
+          <span className="text-foreground sm:hidden">deevan</span>
+          <span className="hidden text-foreground sm:inline">
+            Baviri Setty Sai Deevan
+          </span>
           <span className="text-foreground/60">@portfolio</span>
           <span className="text-foreground/60">:~$</span>
         </Link>
