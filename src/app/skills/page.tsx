@@ -1,11 +1,12 @@
 import ScrollReveal from "../components/ScrollReveal";
+import AntigravitySkills from "./AntigravitySkills";
 
 export default function Skills() {
   const groups: Array<{ title: string; items: string[] }> = [
     { title: "Languages", items: ["C", "C++", "Python", "TypeScript"] },
     { title: "Frontend", items: ["React", "Next.js", "Tailwind CSS"] },
     { title: "Backend", items: ["Django", "Django REST Framework"] },
-    { title: "Data", items: ["SQL", "MongoDB"] },
+    { title: "Data", items: ["MySQL", "MongoDB"] },
   ];
 
   return (
@@ -20,26 +21,7 @@ export default function Skills() {
       </ScrollReveal>
 
       <ScrollReveal delayMs={80}>
-        <div className="grid gap-4 md:grid-cols-2">
-          {groups.map((group) => (
-            <section
-              key={group.title}
-              className="glass-surface glass-highlight glass-inner-border rounded-2xl p-5"
-            >
-              <p className="font-mono text-xs text-foreground/60">{group.title}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="glass-surface glass-inner-border rounded-md px-3 py-1 text-sm text-foreground/85"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
+        <AntigravitySkills groups={groups} />
       </ScrollReveal>
     </div>
   );
