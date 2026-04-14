@@ -8,9 +8,9 @@ export default function Home() {
       </p>
 
       <div className="mt-6">
-        <p>> Initializing portfolio...</p>
-        <p>> Loading projects...</p>
-        <p>> Ready 🚀</p>
+        <p> Initializing portfolio...</p>
+        <p> Loading projects...</p>
+        <p> Ready 🚀</p>
       </div>
     </div>
   );
