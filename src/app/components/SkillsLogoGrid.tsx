@@ -29,13 +29,12 @@ export default function SkillsLogoGrid() {
           className="glass-surface glass-inner-border rounded-xl p-4"
         >
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg border border-foreground/10 bg-foreground/5">
+            <div className="spin-holder grid h-10 w-10 place-items-center rounded-lg border border-foreground/10 bg-foreground/5">
               <Image
                 src={skill.src}
                 width={22}
                 height={22}
                 alt={skill.name}
-                className="spin-slow"
               />
             </div>
             <p className="text-sm text-foreground/85">{skill.name}</p>
