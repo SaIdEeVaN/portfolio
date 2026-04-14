@@ -1,16 +1,47 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  return (
-    <nav className="flex justify-between p-4 border-b border-green-500">
-      <h1 className="text-xl font-bold">~/portfolio</h1>
+  const pathname = usePathname();
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/skills", label: "Skills" },
+    { href: "/contact", label: "Contact" },
+  ];
 
-      <div className="space-x-6">
-        <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
-        <Link href="/skills">Skills</Link>
-        <Link href="/contact">Contact</Link>
+  return (
+    <nav className="sticky top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
+        <Link
+          href="/"
+          className="font-mono text-sm text-foreground/80 hover:text-foreground"
+        >
+          <span className="text-foreground">sai</span>
+          <span className="text-foreground/60">@portfolio</span>
+          <span className="text-foreground/60">:~$</span>
+        </Link>
+
+        <div className="flex items-center gap-1 text-sm">
+          {links.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={
+                  "rounded-md px-3 py-2 transition-colors " +
+                  (isActive
+                    ? "bg-foreground/10 text-foreground"
+                    : "text-foreground/70 hover:bg-foreground/10 hover:text-foreground")
+                }
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );
