@@ -15,9 +15,9 @@ export default function Contact() {
             <dd className="mt-1 text-sm">
               <a
                 className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                href="mailto:yourmail@example.com"
+                href="mailto:saideevan@gmail.com"
               >
-                yourmail@example.com
+                saideevan@gmail.com
               </a>
             </dd>
           </div>
@@ -27,11 +27,11 @@ export default function Contact() {
             <dd className="mt-1 text-sm">
               <a
                 className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                href="https://github.com/yourusername"
+                href="https://github.com/SaIdEeVaN"
                 target="_blank"
                 rel="noreferrer"
               >
-                github.com/yourusername
+                github.com/SaIdEeVaN
               </a>
             </dd>
           </div>
@@ -41,11 +41,11 @@ export default function Contact() {
             <dd className="mt-1 text-sm">
               <a
                 className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                href="https://linkedin.com/in/yourprofile"
+                href="https://linkedin.com/in/baviri-setty-sai-deevan"
                 target="_blank"
                 rel="noreferrer"
               >
-                linkedin.com/in/yourprofile
+                linkedin.com/in/baviri-setty-sai-deevan
               </a>
             </dd>
           </div>
