@@ -4,24 +4,22 @@ type SkillLogo = {
   name: string;
   src?: string;
   fallbackText?: string;
+  className?: string;
 };
 
 const SKILLS: SkillLogo[] = [
   { name: "Linux", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
   { name: "Debian", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/debian/debian-original.svg" },
-  { name: "Kali Linux", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/kalilinux.svg" },
+  { name: "Kali Linux", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/kalilinux.svg", className: "dark:invert" },
   { name: "Nmap", src: "https://nmap.org/images/nmap-logo-256x256.png" },
-  { name: "Wireshark", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wireshark.svg" },
-  { name: "Metasploit", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/metasploit.svg" },
-  { name: "John the Ripper", fallbackText: "JtR" },
-  { name: "Ettercap", fallbackText: "EC" },
-  { name: "Cryptography", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openssl.svg" },
-  { name: "Shell Scripting", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gnubash.svg" },
+  { name: "Wireshark", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wireshark.svg", className: "dark:invert opacity-70" },
+  { name: "Metasploit", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/metasploit.svg", className: "dark:invert opacity-70" },
+  { name: "Shell Scripting", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gnubash.svg", className: "dark:invert opacity-70" },
   { name: "Java", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
   { name: "HTML", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
   { name: "CSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
   { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "C", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+  { name: "C", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-plain.svg" },
   { name: "C++", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
   { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
   { name: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
@@ -35,12 +33,21 @@ const SKILLS: SkillLogo[] = [
 
 export default function SkillsLogoGrid() {
   const Card = ({ skill }: { skill: SkillLogo }) => {
+    const isSvg = Boolean(skill.src?.toLowerCase().endsWith(".svg"));
+
     return (
-      <div className="glass-surface glass-inner-border w-40 shrink-0 rounded-xl p-4">
+      <div className="glass-surface glass-highlight glass-inner-border w-40 shrink-0 rounded-xl p-4">
         <div className="grid place-items-center">
           <div className="grid h-12 w-12 place-items-center rounded-lg border border-foreground/10 bg-foreground/5">
             {skill.src ? (
-              <Image src={skill.src} width={26} height={26} alt={skill.name} />
+              <Image
+                src={skill.src}
+                width={26}
+                height={26}
+                alt={skill.name}
+                className={skill.className}
+                unoptimized={isSvg}
+              />
             ) : (
               <span className="font-mono text-[10px] text-foreground/70">
                 {skill.fallbackText ?? "SKILL"}

@@ -36,6 +36,23 @@ html {
 }
 
 @layer components {
+  .app-shell {
+    opacity: 0;
+    transform: scale(1.02);
+    filter: blur(14px);
+    transition:
+      opacity 720ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 720ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 720ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform, filter;
+  }
+
+  html[data-app-ready="true"] .app-shell {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
   .glass-surface {
     position: relative;
     overflow: hidden;
@@ -51,16 +68,12 @@ html {
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(
-        1200px 600px at 10% 0%,
+      radial-gradient(1200px 600px at 10% 0%,
         color-mix(in oklab, var(--foreground) 10%, transparent),
-        transparent 55%
-      ),
-      radial-gradient(
-        800px 400px at 90% 10%,
+        transparent 55%),
+      radial-gradient(800px 400px at 90% 10%,
         color-mix(in oklab, var(--foreground) 6%, transparent),
-        transparent 60%
-      );
+        transparent 60%);
     opacity: 0.9;
   }
 
@@ -101,26 +114,22 @@ html {
 
   .skills-marquee {
     overflow: hidden;
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent
-    );
+    mask-image: linear-gradient(to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent);
+    -webkit-mask-image: linear-gradient(to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent);
   }
 
   .skills-marquee__track {
     display: flex;
     width: max-content;
-    animation: skills-marquee 26s linear infinite;
+    animation: skills-marquee 50s linear infinite;
     will-change: transform;
   }
 
@@ -128,6 +137,51 @@ html {
     display: flex;
     gap: 12px;
     padding-right: 12px;
+  }
+
+  .loader-overlay {
+    animation: loader-overlay-in 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .loader-card {
+    transform-origin: 50% 50%;
+    animation:
+      loader-card-in 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
+      loader-card-float 1400ms ease-in-out 720ms infinite;
+  }
+
+  .loader-card--exit {
+    animation: loader-card-exit 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .loader-ring {
+    border: 1px solid color-mix(in oklab, var(--foreground) 18%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--background) 40%, transparent) inset;
+  }
+
+  .loader-scan {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loader-scan::after {
+    content: "";
+    position: absolute;
+    inset: -40% -10%;
+    background: radial-gradient(
+      600px 160px at 20% 50%,
+      color-mix(in oklab, var(--foreground) 14%, transparent),
+      transparent 60%
+    );
+    transform: translateX(-40%);
+    animation: loader-scan 1350ms linear infinite;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .loader-exit {
+    animation: loader-exit 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 }
 
@@ -137,6 +191,7 @@ html {
     transform: translateY(6px);
     filter: blur(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -148,8 +203,108 @@ html {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes loader-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loader-card-float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes loader-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+    filter: blur(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes loader-scan {
+  from {
+    transform: translateX(-45%);
+  }
+
+  to {
+    transform: translateX(45%);
+  }
+}
+
+@keyframes loader-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(22px);
+  }
+}
+
+@keyframes loader-card-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-6px);
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.42) translateY(18px);
+    filter: blur(16px);
+  }
+}
+
+@keyframes loader-bar {
+  0% {
+    transform: translateX(-35%);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateX(110%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(210%);
+    opacity: 0.55;
   }
 }
 
@@ -157,6 +312,25 @@ html {
   .page-enter {
     animation: none;
   }
+
+  .app-shell {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .loader-overlay,
+  .loader-card,
+  .loader-scan::after,
+  .loader-exit {
+    animation: none;
+  }
+
+  .loader-card--exit {
+    animation: none;
+  }
+
   .reveal {
     opacity: 1;
     transform: none;

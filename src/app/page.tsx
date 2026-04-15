@@ -268,11 +268,11 @@ export default function Home() {
                 <dd className="mt-1 text-sm">
                   <a
                     className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                    href="https://linkedin.com/in/baviri-setty-sai-deevan"
+                    href="https://linkedin.com/in/bavirisetty-sai-deevan"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    linkedin.com/in/baviri-setty-sai-deevan
+                    linkedin.com/in/bavirisetty-sai-deevan
                   </a>
                 </dd>
               </div>

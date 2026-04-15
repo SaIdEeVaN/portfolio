@@ -1,5 +1,11 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect } from "react";
 
 export default function Skills() {
-  redirect("/#skills");
+  useEffect(() => {
+    window.location.replace("/#skills");
+  }, []);
+
+  return null;
 }
