@@ -1,5 +1,4 @@
 import "./globals.css";
-import AntigravityBackground from "./components/AntigravityBackground";
 import InitialLoader from "./components/InitialLoader";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
@@ -19,7 +18,6 @@ export default function RootLayout({
       <body className="relative min-h-screen bg-background text-foreground antialiased">
         <InitialLoader />
         <div className="app-shell">
-          <AntigravityBackground />
           <div className="relative z-10">
             <Navbar />
             <main className="mx-auto w-full max-w-5xl px-6 py-10">
