@@ -1,5 +1,6 @@
 import ScrollReveal from "./components/ScrollReveal";
 import SkillsLogoGrid from "./components/SkillsLogoGrid";
+import Image from "next/image";
 
 type TimelineItem = {
   title: string;
@@ -61,6 +62,21 @@ function Timeline({ items }: { items: TimelineItem[] }) {
 }
 
 export default function Home() {
+  const socials = [
+    {
+      label: "GitHub",
+      href: "https://github.com/SaIdEeVaN",
+      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg",
+      iconClassName: "dark:invert",
+    },
+    {
+      label: "LinkedIn",
+      href: "https://linkedin.com/in/bavirisetty-sai-deevan",
+      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg",
+      iconClassName: "dark:invert",
+    },
+  ] as const;
+
   const experienceItems: TimelineItem[] = [
     {
       title: "Tech Team Member",
@@ -239,41 +255,46 @@ export default function Home() {
             <dl className="space-y-4">
               <div>
                 <dt className="font-mono text-xs text-foreground/60">Email</dt>
-                <dd className="mt-1 text-sm">
+                <dd className="mt-2 flex flex-wrap items-center gap-2">
                   <a
-                    className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
+                    className="glass-surface glass-inner-border group inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
                     href="mailto:saideevan@gmail.com"
+                    aria-label="Email"
+                    title="Email"
                   >
-                    saideevan@gmail.com
+                    <Image
+                      src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gmail.svg"
+                      alt="Email"
+                      width={20}
+                      height={20}
+                      className="opacity-80 transition-opacity group-hover:opacity-100 dark:invert"
+                    />
                   </a>
                 </dd>
               </div>
 
               <div>
-                <dt className="font-mono text-xs text-foreground/60">GitHub</dt>
-                <dd className="mt-1 text-sm">
-                  <a
-                    className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                    href="https://github.com/SaIdEeVaN"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    github.com/SaIdEeVaN
-                  </a>
-                </dd>
-              </div>
-
-              <div>
-                <dt className="font-mono text-xs text-foreground/60">LinkedIn</dt>
-                <dd className="mt-1 text-sm">
-                  <a
-                    className="text-foreground/85 underline underline-offset-4 hover:text-foreground"
-                    href="https://linkedin.com/in/bavirisetty-sai-deevan"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    linkedin.com/in/bavirisetty-sai-deevan
-                  </a>
+                <dt className="font-mono text-xs text-foreground/60">Social</dt>
+                <dd className="mt-2 flex flex-wrap items-center gap-2">
+                  {socials.map((social) => (
+                    <a
+                      key={social.label}
+                      className="glass-surface glass-inner-border group inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={social.label}
+                      title={social.label}
+                    >
+                      <Image
+                        src={social.iconSrc}
+                        alt={social.label}
+                        width={20}
+                        height={20}
+                        className={`opacity-80 transition-opacity group-hover:opacity-100 ${social.iconClassName ?? ""}`}
+                      />
+                    </a>
+                  ))}
                 </dd>
               </div>
             </dl>
