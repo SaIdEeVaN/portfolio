@@ -9,8 +9,6 @@ type SkillLogo = {
 
 const SKILLS: SkillLogo[] = [
   { name: "Linux", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-  { name: "Debian", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/debian/debian-original.svg" },
-  { name: "Kali Linux", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/kalilinux.svg", className: "dark:invert" },
   { name: "Nmap", src: "https://nmap.org/images/nmap-logo-256x256.png" },
   { name: "Wireshark", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wireshark.svg", className: "dark:invert opacity-70" },
   { name: "Metasploit", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/metasploit.svg", className: "dark:invert opacity-70" },
