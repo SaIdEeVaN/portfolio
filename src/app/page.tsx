@@ -274,6 +274,20 @@ export default function Home() {
               </div>
 
               <div>
+                <dt className="font-mono text-xs text-foreground/60">Phone</dt>
+                <dd className="mt-2 flex flex-wrap items-center gap-2">
+                  <a
+                    className="glass-surface glass-inner-border inline-flex h-10 items-center rounded-xl bg-foreground/5 px-4 text-sm text-foreground/75 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+                    href="tel:+918838291379"
+                    aria-label="Phone"
+                    title="Call"
+                  >
+                    +91 88382 91379
+                  </a>
+                </dd>
+              </div>
+
+              <div>
                 <dt className="font-mono text-xs text-foreground/60">Social</dt>
                 <dd className="mt-2 flex flex-wrap items-center gap-2">
                   {socials.map((social) => (
