@@ -367,3 +367,36 @@ canvas {
     display: none;
   }
 }
+
+@media print {
+  html {
+    scroll-behavior: auto;
+  }
+
+  nav,
+  .loader-overlay {
+    display: none !important;
+  }
+
+  .app-shell {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .page-enter,
+  .reveal,
+  .loader-card,
+  .loader-scan::after {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .glass-surface {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

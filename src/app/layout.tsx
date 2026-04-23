@@ -41,11 +41,20 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: SITE_TITLE,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    images: ["/twitter-image"],
   },
   keywords: [
     "portfolio",
@@ -69,9 +78,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE_NAME,
+    url: SITE_URL,
+    sameAs: [
+      "https://github.com/SaIdEeVaN",
+      "https://linkedin.com/in/bavirisetty-sai-deevan",
+    ],
+  };
+
   return (
     <html lang="en" className="h-full">
       <body className="relative min-h-screen bg-background text-foreground antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-xl focus:px-4 focus:py-2 focus:text-sm focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 glass-surface glass-inner-border"

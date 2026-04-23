@@ -296,7 +296,7 @@ export default function Home() {
                       className="glass-surface glass-inner-border group inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
                       href={social.href}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       aria-label={social.label}
                       title={social.label}
                     >
