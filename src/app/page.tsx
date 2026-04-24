@@ -75,6 +75,12 @@ export default function Home() {
       iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg",
       iconClassName: "dark:invert",
     },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/_._saideevan_._/",
+      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg",
+      iconClassName: "dark:invert",
+    },
   ] as const;
 
   const experienceItems: TimelineItem[] = [
