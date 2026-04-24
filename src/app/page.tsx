@@ -283,12 +283,20 @@ export default function Home() {
                 <dt className="font-mono text-xs text-foreground/60">Phone</dt>
                 <dd className="mt-2 flex flex-wrap items-center gap-2">
                   <a
-                    className="glass-surface glass-inner-border inline-flex h-10 items-center rounded-xl bg-foreground/5 px-4 text-sm text-foreground/75 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-                    href="tel:+918838291379"
-                    aria-label="Phone"
-                    title="Call"
+                    className="glass-surface glass-inner-border group inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
+                    href="https://wa.me/918838291379"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                    title="WhatsApp: +91 88382 91379"
                   >
-                    +91 88382 91379
+                    <Image
+                      src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/whatsapp.svg"
+                      alt="WhatsApp"
+                      width={20}
+                      height={20}
+                      className="opacity-80 transition-opacity group-hover:opacity-100 dark:invert"
+                    />
                   </a>
                 </dd>
               </div>
