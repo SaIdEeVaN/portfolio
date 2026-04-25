@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50" aria-label="Primary">
-      <div className="glass-surface glass-highlight border-b border-foreground/10">
+      <div className="relative overflow-hidden bg-background glass-highlight border-b border-foreground/10">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:flex-nowrap sm:px-6 sm:py-4">
           <Link
             href="/#home"
