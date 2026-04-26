@@ -38,11 +38,9 @@ export default function ScrollReveal({
   return (
     <div
       ref={ref}
-      className={
-        "reveal " +
-        (isVisible ? "reveal--in " : "") +
-        (className ? className : "")
-      }
+      className={["reveal", isVisible ? "reveal--in" : "", className]
+        .filter(Boolean)
+        .join(" ")}
       style={{ transitionDelay: `${delayMs}ms` }}
     >
       {children}

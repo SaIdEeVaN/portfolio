@@ -9,6 +9,16 @@ export default function InitialLoader() {
   useEffect(() => {
     delete document.documentElement.dataset.appReady;
 
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      document.documentElement.dataset.appReady = "true";
+      setTimeout(() => setIsVisible(false), 0);
+      return;
+    }
+
     const startExitTimer = window.setTimeout(() => {
       document.documentElement.dataset.appReady = "true";
       setIsExiting(true);
@@ -74,3 +84,4 @@ export default function InitialLoader() {
     </div>
   );
 }
+
