@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 type ScrollRevealProps = {
   children: React.ReactNode;
@@ -15,8 +16,12 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldReveal = prefersReducedMotion || isVisible;
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     const element = ref.current;
     if (!element) return;
 
@@ -33,12 +38,12 @@ export default function ScrollReveal({
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <div
       ref={ref}
-      className={["reveal", isVisible ? "reveal--in" : "", className]
+      className={["reveal", shouldReveal ? "reveal--in" : "", className]
         .filter(Boolean)
         .join(" ")}
       style={{ transitionDelay: `${delayMs}ms` }}

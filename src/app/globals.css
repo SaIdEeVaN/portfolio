@@ -341,6 +341,10 @@ canvas {
     animation: none;
   }
 
+  .loader-overlay {
+    display: none;
+  }
+
   .loader-card--exit {
     animation: none;
   }
