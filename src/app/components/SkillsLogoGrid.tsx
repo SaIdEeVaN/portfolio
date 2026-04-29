@@ -32,6 +32,7 @@ const SKILLS: SkillLogo[] = [
 export default function SkillsLogoGrid() {
   const Card = ({ skill }: { skill: SkillLogo }) => {
     const isSvg = Boolean(skill.src?.toLowerCase().endsWith(".svg"));
+    const isLocalRaster = Boolean(skill.src?.startsWith("/") && !isSvg);
 
     return (
       <div className="glass-surface glass-highlight glass-inner-border w-40 shrink-0 rounded-xl p-4">
@@ -45,6 +46,7 @@ export default function SkillsLogoGrid() {
                 alt={skill.name}
                 className={skill.className}
                 unoptimized={isSvg}
+                style={isLocalRaster ? { width: 26, height: 26 } : undefined}
               />
             ) : (
               <span className="font-mono text-[10px] text-foreground/70">
