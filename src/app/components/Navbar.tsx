@@ -1,16 +1,15 @@
-"use client";
 import Link from "next/link";
 
-export default function Navbar() {
-  const links = [
-    { href: "/#home", label: "Home" },
-    { href: "/#about", label: "About" },
-    { href: "/#experience", label: "Experience" },
-    { href: "/#education", label: "Education" },
-    { href: "/#skills", label: "Skills" },
-    { href: "/#contact", label: "Contact" },
-  ];
+const LINKS = [
+  { href: "/#home", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#education", label: "Education" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/#contact", label: "Contact" },
+] as const;
 
+export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50" aria-label="Primary">
       <div className="relative overflow-hidden bg-background glass-highlight border-b border-foreground/10">
@@ -28,7 +27,7 @@ export default function Navbar() {
           </Link>
 
           <div className="flex flex-wrap items-center justify-end gap-1 text-xs sm:text-sm">
-            {links.map((link) => {
+            {LINKS.map((link) => {
               return (
                 <Link
                   key={link.href}

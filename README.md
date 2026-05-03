@@ -9,6 +9,15 @@ npm install
 npm run dev
 ```
 
+### Custom port (Windows)
+
+On this repo, passing flags via `npm run dev -- --port 3001` may get mangled into `next dev 3001` (treated as a directory).
+
+- PowerShell:
+	- `$env:PORT=3001; npm run dev`
+- Or use the wrapper script:
+	- `npm run dev:port -- 3001`
+
 Open http://localhost:3000
 
 ## Build
