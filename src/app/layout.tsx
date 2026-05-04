@@ -9,9 +9,21 @@ const SITE_TITLE = `${SITE_NAME} | Portfolio`;
 const SITE_DESCRIPTION =
   "Aspiring software engineer focused on DevOps and cybersecurity. Explore experience, education, skills, and contact details.";
 
-const SITE_URL =
+function normalizeSiteUrl(rawUrl: string) {
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return "http://localhost:3000";
+
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
+
+  return `https://${trimmed}`;
+}
+
+const RAW_SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+const SITE_URL = normalizeSiteUrl(RAW_SITE_URL);
 
 export const metadata: Metadata = {
   title: {

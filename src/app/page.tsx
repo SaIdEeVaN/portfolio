@@ -11,6 +11,67 @@ type TimelineItem = {
   highlights?: string[];
 };
 
+const SOCIALS = [
+  {
+    label: "GitHub",
+    href: "https://github.com/SaIdEeVaN",
+    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg",
+    iconClassName: "dark:invert",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/bavirisetty-sai-deevan",
+    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg",
+    iconClassName: "dark:invert",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/_._saideevan_._/",
+    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg",
+    iconClassName: "dark:invert",
+  },
+] as const;
+
+const EXPERIENCE_ITEMS: TimelineItem[] = [
+  {
+    title: "Tech Team Member",
+    subtitle: "Blockchain Innovation Club, Rajalakshmi Engineering College",
+    start: "Nov 2025",
+    end: "Present",
+    summary: "Contributing to club technical initiatives and collaborative builds.",
+    highlights: ['Led "Byte The Dust: A Cyber Forensics Event" during Titanium 2026.'],
+  },
+  {
+    title: "Web Development Intern",
+    subtitle: "InternPe",
+    start: "Dec 2025",
+    end: "Jan 2026",
+    summary: "Built and iterated on web features as part of an internship.",
+  },
+  {
+    title: "Vice President",
+    subtitle: "Science Club, Vivekananda Vidyalaya Jr. College",
+    start: "Jun 2022",
+    end: "Apr 2023",
+    summary: "Supported club leadership, coordination, and student-led activities.",
+  },
+];
+
+const EDUCATION_ITEMS: TimelineItem[] = [
+  {
+    title: "Rajalakshmi Engineering College",
+    subtitle: "B.E Computer Science and Engineering (Cyber Security) · CGPA: 8.71",
+    start: "Aug 2024",
+    end: "May 2028",
+  },
+  {
+    title: "Vivekananda Vidyalaya Jr. College",
+    subtitle: "Schooling · Percentage: 92.2%",
+    start: "Jun 2010",
+    end: "Mar 2024",
+  },
+];
+
 function Timeline({ items }: { items: TimelineItem[] }) {
   return (
     <ol className="relative space-y-4">
@@ -62,67 +123,6 @@ function Timeline({ items }: { items: TimelineItem[] }) {
 }
 
 export default function Home() {
-  const socials = [
-    {
-      label: "GitHub",
-      href: "https://github.com/SaIdEeVaN",
-      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg",
-      iconClassName: "dark:invert",
-    },
-    {
-      label: "LinkedIn",
-      href: "https://linkedin.com/in/bavirisetty-sai-deevan",
-      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg",
-      iconClassName: "dark:invert",
-    },
-    {
-      label: "Instagram",
-      href: "https://www.instagram.com/_._saideevan_._/",
-      iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg",
-      iconClassName: "dark:invert",
-    },
-  ] as const;
-
-  const experienceItems: TimelineItem[] = [
-    {
-      title: "Tech Team Member",
-      subtitle: "Blockchain Innovation Club, Rajalakshmi Engineering College",
-      start: "Nov 2025",
-      end: "Present",
-      summary: "Contributing to club technical initiatives and collaborative builds.",
-      highlights: ['Led "Byte The Dust: A Cyber Forensics Event" during Titanium 2026.'],
-    },
-    {
-      title: "Web Development Intern",
-      subtitle: "InternPe",
-      start: "Dec 2025",
-      end: "Jan 2026",
-      summary: "Built and iterated on web features as part of an internship.",
-    },
-    {
-      title: "Vice President",
-      subtitle: "Science Club, Vivekananda Vidyalaya Jr. College",
-      start: "Jun 2022",
-      end: "Apr 2023",
-      summary: "Supported club leadership, coordination, and student-led activities.",
-    },
-  ];
-
-  const educationItems: TimelineItem[] = [
-    {
-      title: "Rajalakshmi Engineering College",
-      subtitle: "B.E Computer Science and Engineering (Cyber Security) · CGPA: 8.71",
-      start: "Aug 2024",
-      end: "May 2028",
-    },
-    {
-      title: "Vivekananda Vidyalaya Jr. College",
-      subtitle: "Schooling · Percentage: 92.2%",
-      start: "Jun 2010",
-      end: "Mar 2024",
-    },
-  ];
-
   return (
     <div className="space-y-16">
       <section id="home" className="scroll-mt-28 space-y-10">
@@ -212,7 +212,7 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal delayMs={80}>
-          <Timeline items={experienceItems} />
+          <Timeline items={EXPERIENCE_ITEMS} />
         </ScrollReveal>
       </section>
 
@@ -227,7 +227,7 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal delayMs={80}>
-          <Timeline items={educationItems} />
+          <Timeline items={EDUCATION_ITEMS} />
         </ScrollReveal>
       </section>
 
@@ -304,7 +304,7 @@ export default function Home() {
               <div>
                 <dt className="font-mono text-xs text-foreground/60">Social</dt>
                 <dd className="mt-2 flex flex-wrap items-center gap-2">
-                  {socials.map((social) => (
+                  {SOCIALS.map((social) => (
                     <a
                       key={social.label}
                       className="glass-surface glass-inner-border group inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
