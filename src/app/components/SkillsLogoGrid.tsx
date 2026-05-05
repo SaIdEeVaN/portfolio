@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+//code bro coding can save my life it seems
+
 type SkillLogo = {
   name: string;
   src?: string;
