@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const LINKS = [
   { href: "/#home", label: "Home" },
@@ -40,9 +43,10 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <ThemeToggle />
           </div>
         </div>
       </div>
     </nav>
   );
-}
+}

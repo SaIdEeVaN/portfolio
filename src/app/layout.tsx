@@ -2,6 +2,7 @@ import "./globals.css";
 import InitialLoader from "./components/InitialLoader";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
+import { ThemeProvider } from "./components/ThemeProvider";
 import type { Metadata, Viewport } from "next";
 
 const SITE_NAME = "Baviri Setty Sai Deevan";
@@ -102,7 +103,14 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('portfolio-theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark')}else{document.documentElement.setAttribute('data-theme','light');document.documentElement.classList.remove('dark')}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="relative min-h-screen bg-background text-foreground antialiased">
         <script
           type="application/ld+json"
@@ -114,19 +122,21 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <InitialLoader />
-        <div className="app-shell">
-          <div className="relative z-10">
-            <Navbar />
-            <main
-              id="content"
-              tabIndex={-1}
-              className="mx-auto w-full max-w-5xl px-6 py-10"
-            >
-              <PageTransition>{children}</PageTransition>
-            </main>
+        <ThemeProvider>
+          <InitialLoader />
+          <div className="app-shell">
+            <div className="relative z-10">
+              <Navbar />
+              <main
+                id="content"
+                tabIndex={-1}
+                className="mx-auto w-full max-w-5xl px-6 py-10"
+              >
+                <PageTransition>{children}</PageTransition>
+              </main>
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );
