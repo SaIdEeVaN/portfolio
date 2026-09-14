@@ -39,8 +39,8 @@ If not set, the app falls back to `VERCEL_URL` when deployed on Vercel, or `http
 
 ## Project notes
 
-- Single-page sections: Home, About, Experience, Education, Skills, Contact (anchored routes like `/#about`).
-- Convenience routes (`/about`, `/experience`, etc.) redirect to the corresponding section.
+- Separate pages: `/` (home), `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`. The page list, labels and accent colors live in `src/app/lib/pages.ts`; each page ends with a link to the next one.
+- Nav links use a color wipe between pages (`src/app/components/PageTransition.tsx`); Restrained motion falls back to normal navigation.
 - Neo-brutalist design: Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif via `next/font`, tokens in `src/app/globals.css`.
 - Footer controls switch the palette (Clash / Acid / Noir) and motion intensity (Restrained / Springy / Chaotic); both are stored in `localStorage` and applied to `<html>` before first paint.
 - Motion (scroll reveal, parallax, magnetic hover, cursor follower, text scramble, section wipe) is native — no animation library. Restrained mode and `prefers-reduced-motion` turn off the heavier effects.

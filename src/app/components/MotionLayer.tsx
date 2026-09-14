@@ -66,6 +66,11 @@ export default function MotionLayer() {
       const stiffness = motion === "chaotic" ? 0.17 : 0.13;
       const damping = motion === "chaotic" ? 0.8 : 0.72;
 
+      // Pages swap on navigation; forget elements that are no longer in the document.
+      springs.forEach((_, element) => {
+        if (!element.isConnected) springs.delete(element);
+      });
+
       document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((element) => {
         let spring = springs.get(element);
         if (!spring) {

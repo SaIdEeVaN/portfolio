@@ -1,13 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getSection, SECTIONS, type SectionId } from "../lib/sections";
+import { getPage, PAGES, type PageHref } from "../lib/pages";
+import { PageLink } from "./PageTransition";
 import { PaletteCycleButton } from "./PreferenceControls";
-import { SectionLink } from "./SectionNav";
 
-const LINKS: SectionId[] = ["about", "experience", "education", "skills"];
+const LINKS: PageHref[] = ["/about", "/experience", "/projects", "/education", "/skills"];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -20,31 +22,38 @@ export default function Navbar() {
   }, [isOpen]);
 
   const close = () => setIsOpen(false);
+  const current = (href: string) => (pathname === href ? "page" : undefined);
 
   return (
     <nav className="nav" aria-label="Primary">
       <div className="shell nav__bar">
-        <SectionLink to="home" className="nav__brand" onNavigate={close}>
+        <PageLink href="/" className="nav__brand" onNavigate={close} aria-current={current("/")}>
           <span className="nav__brand-full">Baviri Setty Sai Deevan</span>
           <span className="nav__brand-short">Deevan</span>
           <span className="nav__brand-prompt">@portfolio:~$</span>
-        </SectionLink>
+        </PageLink>
 
         <ul className="nav__links">
-          {LINKS.map((id) => (
-            <li key={id}>
-              <SectionLink to={id} className="nav__link" magnetic>
-                {getSection(id).label}
-              </SectionLink>
+          {LINKS.map((href) => (
+            <li key={href}>
+              <PageLink href={href} className="nav__link" magnetic aria-current={current(href)}>
+                {getPage(href).label}
+              </PageLink>
             </li>
           ))}
         </ul>
 
         <div className="nav__actions">
           <PaletteCycleButton />
-          <SectionLink to="contact" className="nav__cta" magnetic onNavigate={close}>
+          <PageLink
+            href="/contact"
+            className="nav__cta"
+            magnetic
+            onNavigate={close}
+            aria-current={current("/contact")}
+          >
             Hire me
-          </SectionLink>
+          </PageLink>
           <button
             type="button"
             className="nav__menu-btn"
@@ -60,11 +69,16 @@ export default function Navbar() {
       {isOpen ? (
         <div id="nav-panel" className="nav__panel">
           <ul className="shell nav__panel-list">
-            {SECTIONS.map((section) => (
-              <li key={section.id}>
-                <SectionLink to={section.id} className="nav__panel-link" onNavigate={close}>
-                  {section.label}
-                </SectionLink>
+            {PAGES.map((page) => (
+              <li key={page.href}>
+                <PageLink
+                  href={page.href}
+                  className="nav__panel-link"
+                  onNavigate={close}
+                  aria-current={current(page.href)}
+                >
+                  {page.label}
+                </PageLink>
               </li>
             ))}
           </ul>

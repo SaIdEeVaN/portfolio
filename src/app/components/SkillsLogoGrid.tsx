@@ -43,10 +43,13 @@ export function SkillsMarquee() {
     </div>
   );
 
-  // Decorative: the same skills are listed with names in the Skills section.
+  // Decorative: the same skills are listed with names on the Skills page.
+  // The wrapper clips the tilted band so it can never widen the page.
   return (
-    <div className="marquee" aria-hidden="true">
-      <div className="marquee__track">{[renderSet("a"), renderSet("b")]}</div>
+    <div className="marquee-wrap" aria-hidden="true">
+      <div className="marquee">
+        <div className="marquee__track">{[renderSet("a"), renderSet("b")]}</div>
+      </div>
     </div>
   );
 }

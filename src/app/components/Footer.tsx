@@ -1,6 +1,6 @@
-import { SECTIONS } from "../lib/sections";
+import { PAGES } from "../lib/pages";
+import { PageLink } from "./PageTransition";
 import { FooterPreferences } from "./PreferenceControls";
-import { SectionLink } from "./SectionNav";
 
 export default function Footer() {
   return (
@@ -18,11 +18,11 @@ export default function Footer() {
         <div className="footer__grid">
           <nav aria-label="Footer">
             <ul className="footer__nav">
-              {SECTIONS.map((section) => (
-                <li key={section.id}>
-                  <SectionLink to={section.id} className="footer__link">
-                    {section.label}
-                  </SectionLink>
+              {PAGES.map((page) => (
+                <li key={page.href}>
+                  <PageLink href={page.href} className="footer__link">
+                    {page.label}
+                  </PageLink>
                 </li>
               ))}
             </ul>

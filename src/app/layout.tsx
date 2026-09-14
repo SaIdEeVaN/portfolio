@@ -4,8 +4,9 @@ import Footer from "./components/Footer";
 import InitialLoader from "./components/InitialLoader";
 import MotionLayer from "./components/MotionLayer";
 import Navbar from "./components/Navbar";
-import { SectionNavProvider } from "./components/SectionNav";
+import { PageTransitionProvider } from "./components/PageTransition";
 import { DEFAULT_MOTION, DEFAULT_PALETTE, PREFERENCES_SCRIPT } from "./lib/preferences";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL, SOCIAL_IMAGE } from "./lib/site";
 import type { Metadata, Viewport } from "next";
 
 const displayFont = Archivo_Black({
@@ -30,27 +31,6 @@ const serifFont = Instrument_Serif({
   subsets: ["latin"],
   variable: "--font-instrument-serif",
 });
-
-const SITE_NAME = "Baviri Setty Sai Deevan";
-const SITE_TITLE = `${SITE_NAME} | Portfolio`;
-const SITE_DESCRIPTION =
-  "Aspiring software engineer focused on DevOps and cybersecurity. Explore experience, education, skills, and contact details.";
-
-function normalizeSiteUrl(rawUrl: string) {
-  const trimmed = rawUrl.trim();
-  if (!trimmed) return "http://localhost:3000";
-
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  if (trimmed.startsWith("//")) return `https:${trimmed}`;
-
-  return `https://${trimmed}`;
-}
-
-const RAW_SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
-const SITE_URL = normalizeSiteUrl(RAW_SITE_URL);
 
 export const metadata: Metadata = {
   title: {
@@ -80,14 +60,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: SITE_TITLE,
-      },
-    ],
+    images: [SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
@@ -153,7 +126,7 @@ export default function RootLayout({
         <a href="#content" className="skip-link">
           Skip to content
         </a>
-        <SectionNavProvider>
+        <PageTransitionProvider>
           <InitialLoader />
           <MotionLayer />
           <Navbar />
@@ -161,7 +134,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-        </SectionNavProvider>
+        </PageTransitionProvider>
       </body>
     </html>
   );
