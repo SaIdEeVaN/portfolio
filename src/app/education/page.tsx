@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import NextPage from "../components/NextPage";
 import PageHeader from "../components/PageHeader";
+import ScoreGauge from "../components/ScoreGauge";
 import ScrollReveal from "../components/ScrollReveal";
 import { getPage } from "../lib/pages";
 import { pageMetadata } from "../lib/site";
@@ -16,6 +17,9 @@ type EducationItem = {
   title: string;
   detail: string;
   score: string;
+  /** The score as a 0–100 fill level for the gauge. */
+  gauge: number;
+  gaugeLabel: string;
   start: string;
   end: string;
 };
@@ -25,6 +29,8 @@ const EDUCATION_ITEMS: EducationItem[] = [
     title: "Rajalakshmi Engineering College",
     detail: "B.E Computer Science and Engineering (Cyber Security)",
     score: "CGPA: 8.71",
+    gauge: 87.1,
+    gaugeLabel: "CGPA 8.71 out of 10",
     start: "Aug 2024",
     end: "May 2028",
   },
@@ -32,6 +38,8 @@ const EDUCATION_ITEMS: EducationItem[] = [
     title: "Vivekananda Vidyalaya Jr. College",
     detail: "Schooling",
     score: "Percentage: 92.2%",
+    gauge: 92.2,
+    gaugeLabel: "92.2 percent",
     start: "Jun 2010",
     end: "Mar 2024",
   },
@@ -54,6 +62,7 @@ export default function EducationPage() {
                   <h2 className="edu-card__title">{item.title}</h2>
                   <p className="edu-card__detail">{item.detail}</p>
                   <p className="edu-card__score">{item.score}</p>
+                  <ScoreGauge value={item.gauge} label={item.gaugeLabel} />
                 </article>
               </ScrollReveal>
             ))}

@@ -3,6 +3,7 @@ import { Archivo_Black, Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "
 import Footer from "./components/Footer";
 import InitialLoader from "./components/InitialLoader";
 import MotionLayer from "./components/MotionLayer";
+import MotionPreferences from "./components/MotionPreferences";
 import Navbar from "./components/Navbar";
 import { PageTransitionProvider } from "./components/PageTransition";
 import { DEFAULT_MOTION, DEFAULT_PALETTE, PREFERENCES_SCRIPT } from "./lib/preferences";
@@ -126,15 +127,17 @@ export default function RootLayout({
         <a href="#content" className="skip-link">
           Skip to content
         </a>
-        <PageTransitionProvider>
-          <InitialLoader />
-          <MotionLayer />
-          <Navbar />
-          <main id="content" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer />
-        </PageTransitionProvider>
+        <MotionPreferences>
+          <PageTransitionProvider>
+            <InitialLoader />
+            <MotionLayer />
+            <Navbar />
+            <main id="content" tabIndex={-1}>
+              {children}
+            </main>
+            <Footer />
+          </PageTransitionProvider>
+        </MotionPreferences>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+import DynamicText, { type Greeting } from "@/components/kokonutui/dynamic-text";
 import Scramble from "./components/Scramble";
 import ScrollReveal from "./components/ScrollReveal";
 import { PageLink } from "./components/PageTransition";
@@ -7,6 +8,13 @@ import { PROJECTS } from "./lib/projects";
 
 const HERO_INTRO =
   "I'm passionate about DevOps and cybersecurity. Most days you'll find me in the Linux CLI (especially Debian) — building, breaking, and improving systems until they're reliable and secure.";
+
+// The languages VoicePath supports.
+const GREETINGS: Greeting[] = [
+  { text: "Hello", lang: "en" },
+  { text: "வணக்கம்", lang: "ta" },
+  { text: "नमस्ते", lang: "hi" },
+];
 
 const SNAPSHOT = [
   { label: "Focus", value: "Systems, DevOps, cybersecurity, and Linux." },
@@ -39,7 +47,9 @@ export default function Home() {
             <span className="deco deco--three" data-parallax="0.28" />
           </div>
 
-          <p className="eyebrow hero__eyebrow">Hi, I am Baviri Setty Sai Deevan.</p>
+          <p className="eyebrow hero__eyebrow">
+            <DynamicText greetings={GREETINGS} finalText="Hi, I am Baviri Setty Sai Deevan." />
+          </p>
 
           <h1 className="hero__name" aria-label="Baviri Setty Sai Deevan">
             <span className="hero__line">Baviri</span>

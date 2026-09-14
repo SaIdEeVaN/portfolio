@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import LanguageRing from "../components/LanguageRing";
 import NextPage from "../components/NextPage";
 import PageHeader from "../components/PageHeader";
 import ScrollReveal from "../components/ScrollReveal";
@@ -71,6 +72,15 @@ function ProjectCaseStudy({ project }: { project: Project }) {
           ))}
         </dl>
       </ScrollReveal>
+
+      <section aria-labelledby={`${project.slug}-languages`}>
+        <ScrollReveal>
+          <h3 id={`${project.slug}-languages`} className="project__subhead">
+            Code by language
+          </h3>
+        </ScrollReveal>
+        <LanguageRing languages={project.languages} source={project.languagesSource} />
+      </section>
 
       <section aria-labelledby={`${project.slug}-pipeline`}>
         <ScrollReveal>

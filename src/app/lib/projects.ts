@@ -1,3 +1,8 @@
+export type ProjectLanguage = {
+  name: string;
+  bytes: number;
+};
+
 export type Project = {
   slug: string;
   name: string;
@@ -8,6 +13,8 @@ export type Project = {
   repoUrl: string;
   liveUrl?: string;
   facts: { label: string; value: string }[];
+  languages: ProjectLanguage[];
+  languagesSource: string;
   pipelineNote: string;
   pipeline: { title: string; text: string; tool: string }[];
   rules: { title: string; text: string }[];
@@ -32,6 +39,15 @@ export const PROJECTS: Project[] = [
       { label: "Backend", value: "FastAPI, with an optional Supabase database" },
       { label: "Frontend", value: "Next.js App Router, TypeScript, Tailwind v4" },
     ],
+    // GitHub's language breakdown for the repo (bytes), top five languages.
+    languages: [
+      { name: "Python", bytes: 506_815 },
+      { name: "TypeScript", bytes: 255_592 },
+      { name: "PLpgSQL", bytes: 17_606 },
+      { name: "CSS", bytes: 11_220 },
+      { name: "Dockerfile", bytes: 1_723 },
+    ],
+    languagesSource: "Top five languages by bytes of code, from GitHub, September 2026.",
     pipelineNote:
       "Every component except the LLM runs on the machine, and raw audio isn't kept unless the person opts in.",
     pipeline: [
