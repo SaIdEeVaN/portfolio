@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 type RevealCallback = () => void;
@@ -25,7 +25,7 @@ function getSharedObserver() {
         sharedObserver?.unobserve(entry.target);
       }
     },
-    { root: null, threshold: 0.15, rootMargin: "-10% 0px -10% 0px" },
+    { root: null, threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
   );
 
   return sharedObserver;
@@ -35,17 +35,23 @@ type ScrollRevealProps = {
   children: React.ReactNode;
   className?: string;
   delayMs?: number;
+  as?: "div" | "li";
 };
 
 export default function ScrollReveal({
   children,
   className,
   delayMs = 0,
+  as: Tag = "div",
 }: ScrollRevealProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const shouldReveal = prefersReducedMotion || isVisible;
+
+  const setRef = useCallback((node: HTMLElement | null) => {
+    ref.current = node;
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion || isVisible) return;
@@ -71,14 +77,14 @@ export default function ScrollReveal({
   const style = delayMs ? ({ transitionDelay: `${delayMs}ms` } as const) : undefined;
 
   return (
-    <div
-      ref={ref}
+    <Tag
+      ref={setRef}
       className={["reveal", shouldReveal ? "reveal--in" : "", className]
         .filter(Boolean)
         .join(" ")}
       style={style}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

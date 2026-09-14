@@ -1,9 +1,35 @@
 import "./globals.css";
+import { Archivo_Black, Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import Footer from "./components/Footer";
 import InitialLoader from "./components/InitialLoader";
+import MotionLayer from "./components/MotionLayer";
 import Navbar from "./components/Navbar";
-import PageTransition from "./components/PageTransition";
-import { ThemeProvider } from "./components/ThemeProvider";
+import { SectionNavProvider } from "./components/SectionNav";
+import { DEFAULT_MOTION, DEFAULT_PALETTE, PREFERENCES_SCRIPT } from "./lib/preferences";
 import type { Metadata, Viewport } from "next";
+
+const displayFont = Archivo_Black({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-archivo-black",
+});
+
+const bodyFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
+
+const monoFont = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+});
+
+const serifFont = Instrument_Serif({
+  weight: "400",
+  style: "italic",
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+});
 
 const SITE_NAME = "Baviri Setty Sai Deevan";
 const SITE_TITLE = `${SITE_NAME} | Portfolio`;
@@ -84,7 +110,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#F5F1E8",
 };
+
+// Without JavaScript, skip the loader and show content that would otherwise reveal on scroll.
+const NO_SCRIPT_STYLES =
+  "<style>.loader{display:none!important}.reveal{opacity:1!important;translate:none!important;rotate:none!important}</style>";
 
 export default function RootLayout({
   children,
@@ -103,40 +134,34 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-palette={DEFAULT_PALETTE}
+      data-motion={DEFAULT_MOTION}
+      className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${serifFont.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('portfolio-theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark')}else{document.documentElement.setAttribute('data-theme','light');document.documentElement.classList.remove('dark')}}catch(e){}})()`,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: PREFERENCES_SCRIPT }} />
       </head>
-      <body className="relative min-h-screen bg-background text-foreground antialiased">
+      <body>
+        <noscript dangerouslySetInnerHTML={{ __html: NO_SCRIPT_STYLES }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <a
-          href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-xl focus:px-4 focus:py-2 focus:text-sm focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 glass-surface glass-inner-border"
-        >
+        <a href="#content" className="skip-link">
           Skip to content
         </a>
-        <ThemeProvider>
+        <SectionNavProvider>
           <InitialLoader />
-          <div className="app-shell">
-            <div className="relative z-10">
-              <Navbar />
-              <main
-                id="content"
-                tabIndex={-1}
-                className="mx-auto w-full max-w-5xl px-6 py-10"
-              >
-                <PageTransition>{children}</PageTransition>
-              </main>
-            </div>
-          </div>
-        </ThemeProvider>
+          <MotionLayer />
+          <Navbar />
+          <main id="content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+        </SectionNavProvider>
       </body>
     </html>
   );

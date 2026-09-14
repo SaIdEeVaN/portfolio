@@ -1,52 +1,75 @@
 "use client";
 
-import Link from "next/link";
-import ThemeToggle from "./ThemeToggle";
+import { useEffect, useState } from "react";
+import { getSection, SECTIONS, type SectionId } from "../lib/sections";
+import { PaletteCycleButton } from "./PreferenceControls";
+import { SectionLink } from "./SectionNav";
 
-const LINKS = [
-  { href: "/#home", label: "Home" },
-  { href: "/#about", label: "About" },
-  { href: "/#experience", label: "Experience" },
-  { href: "/#education", label: "Education" },
-  { href: "/#skills", label: "Skills" },
-  { href: "/#contact", label: "Contact" },
-] as const;
+const LINKS: SectionId[] = ["about", "experience", "education", "skills"];
 
 export default function Navbar() {
-  return (
-    <nav className="sticky top-0 z-50" aria-label="Primary">
-      <div className="relative overflow-hidden bg-background glass-highlight border-b border-foreground/10">
-        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:flex-nowrap sm:px-6 sm:py-4">
-          <Link
-            href="/#home"
-            className="min-w-0 rounded-md font-mono text-sm text-foreground/80 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
-          >
-            <span className="text-foreground sm:hidden">deevan</span>
-            <span className="hidden text-foreground sm:inline">
-              Baviri Setty Sai Deevan
-            </span>
-            <span className="text-foreground/60">@portfolio</span>
-            <span className="text-foreground/60">:~$</span>
-          </Link>
+  const [isOpen, setIsOpen] = useState(false);
 
-          <div className="flex flex-wrap items-center justify-end gap-1 text-xs sm:text-sm">
-            {LINKS.map((link) => {
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={
-                    "rounded-md px-2 py-1.5 text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 sm:px-3 sm:py-2"
-                  }
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <ThemeToggle />
-          </div>
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
+
+  const close = () => setIsOpen(false);
+
+  return (
+    <nav className="nav" aria-label="Primary">
+      <div className="shell nav__bar">
+        <SectionLink to="home" className="nav__brand" onNavigate={close}>
+          <span className="nav__brand-full">Baviri Setty Sai Deevan</span>
+          <span className="nav__brand-short">Deevan</span>
+          <span className="nav__brand-prompt">@portfolio:~$</span>
+        </SectionLink>
+
+        <ul className="nav__links">
+          {LINKS.map((id) => (
+            <li key={id}>
+              <SectionLink to={id} className="nav__link" magnetic>
+                {getSection(id).label}
+              </SectionLink>
+            </li>
+          ))}
+        </ul>
+
+        <div className="nav__actions">
+          <PaletteCycleButton />
+          <SectionLink to="contact" className="nav__cta" magnetic onNavigate={close}>
+            Hire me
+          </SectionLink>
+          <button
+            type="button"
+            className="nav__menu-btn"
+            aria-expanded={isOpen}
+            aria-controls="nav-panel"
+            onClick={() => setIsOpen((open) => !open)}
+          >
+            {isOpen ? "Close" : "Menu"}
+          </button>
         </div>
       </div>
+
+      {isOpen ? (
+        <div id="nav-panel" className="nav__panel">
+          <ul className="shell nav__panel-list">
+            {SECTIONS.map((section) => (
+              <li key={section.id}>
+                <SectionLink to={section.id} className="nav__panel-link" onNavigate={close}>
+                  {section.label}
+                </SectionLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </nav>
   );
-}
+}
