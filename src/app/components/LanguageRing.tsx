@@ -39,7 +39,6 @@ export default function LanguageRing({ languages, source }: LanguageRingProps) {
         {isInView ? (
           <RingChart
             data={data}
-            size={300}
             strokeWidth={12}
             ringGap={4}
             baseInnerRadius={64}

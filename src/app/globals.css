@@ -1462,6 +1462,13 @@ video {
   text-transform: uppercase;
 }
 
+/* Below 360px the 44px floor lets long words like "BLOCKCHAIN" outgrow the column. */
+@media (max-width: 359px) {
+  .project__title {
+    font-size: 12cqw;
+  }
+}
+
 .project__summary {
   max-width: 36ch;
   font-size: clamp(20px, 2.1vw, 30px);
@@ -1731,9 +1738,11 @@ video {
   box-shadow: 14px 14px 0 var(--ink);
 }
 
+/* 300px square that shrinks on narrow phones; the ring chart scales to fit it. */
 .languages__chart {
   width: 300px;
-  height: 300px;
+  max-width: 100%;
+  aspect-ratio: 1;
 }
 
 .languages__center-value {
@@ -1800,12 +1809,19 @@ video {
 
 @media (max-width: 759px) {
   .languages {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     justify-items: center;
   }
 
   .languages__legend {
     width: 100%;
+  }
+}
+
+/* Below 360px the legend column is too narrow for "TYPESCRIPT" at 18px. */
+@media (max-width: 359px) {
+  .languages__name {
+    font-size: 15px;
   }
 }
 

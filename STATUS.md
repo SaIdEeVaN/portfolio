@@ -10,9 +10,20 @@ Last updated: 2026-09-15
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to the club website case study.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
 
-## Follow-ups
+## Done: fix the 360px overflow on Projects (on `main`)
 
-- [ ] At 360px wide, the "Code by language" box (300px ring plus padding) is 346px in a 328px column, so both case studies are clipped about 18px on the right. It was already happening on VoicePath; `LanguageRing` wasn't changed. 390px and wider are fine.
+At 360px wide, the "Code by language" box (300px ring plus padding) is 346px in a 328px column, so both case studies are clipped about 18px on the right. 390px and wider are fine.
+
+- [x] Find how the Bklit ring chart sizes itself. With a fixed `size` it's rigid. Without one, it measures its parent (visx `ParentSize`) and scales rings and center together, capped at 1:1.
+- [x] Make the ring shrink to fit narrow columns without changing it at 390px and up. `LanguageRing` drops `size={300}`; `.languages__chart` is `width: 300px; max-width: 100%; aspect-ratio: 1`; the narrow-screen grid column is `minmax(0, 1fr)` so the chart can't force it wider.
+- [x] First check: 360px fixed. Both boxes are 328px in a 328px column, the ring is 282px, hover works, and there are no console errors. 390px and up are unchanged (ring 300×300).
+- [x] 320px still overflowed, and the cause was the club title rather than the ring: "BLOCKCHAIN" is 306px at the title's 44px minimum, in a 288px column. Below 360px, the title now sizes at `12cqw` with no minimum (34.56px at 320px). Nothing changes at 360px and up.
+- [x] At 320px, "TYPESCRIPT" ran into its percentage in VoicePath's legend (about 125px of text in a 116px column). Below 360px, legend names are now 15px.
+- [x] Verify:
+  - [x] Lint clean, `tsc --noEmit` clean, `next build` passes
+  - [x] Headless Chrome at 320, 360, 390, 768 and 1440px, plus 360px with motion on. Nothing runs past the viewport at any width. Rings are 242px at 320, 282px at 360 and 300px from 390 up. No legend name or title overflows. Hovering a legend row still switches the center label. No console errors.
+  - [x] Screenshots checked at 320, 360 and 1440px
+- [x] Update STATUS.md, commit, push to `main`
 
 ## Done: rename the club project, link the role, push (on `main`)
 
@@ -83,3 +94,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - Case studies on `/projects` are listed newest first.
 - A case study's "Rules the code enforces" lists only rules the project's build or tests actually check.
 - `PageLink` accepts `/page#id` links: the page wipe runs as usual, then scrolls to that id instead of the top.
+- The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.
