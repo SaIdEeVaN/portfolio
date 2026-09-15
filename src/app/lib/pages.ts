@@ -25,7 +25,7 @@ export const PAGES = [
     slug: "projects",
     label: "Projects",
     accent: "a2",
-    blurb: "VoicePath: voice-first skill discovery and scheme matching.",
+    blurb: "The BIC-REC club website and VoicePath.",
   },
   {
     href: "/education",

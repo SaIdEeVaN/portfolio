@@ -10,7 +10,7 @@ import { pageMetadata } from "../lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Projects by Baviri Setty Sai Deevan, including VoicePath: voice-first skill discovery and scheme matching under the PM-AJAY skilling ecosystem.",
+    "Projects by Baviri Setty Sai Deevan: the website of the Blockchain Innovation Club at REC, and VoicePath, voice-first skill discovery and scheme matching under the PM-AJAY skilling ecosystem.",
   path: "/projects",
 });
 

@@ -20,8 +20,76 @@ export type Project = {
   rules: { title: string; text: string }[];
 };
 
-// Details are taken from the project's README: https://github.com/SaIdEeVaN/voicepath
+// Details are taken from each project's README, linked in repoUrl.
 export const PROJECTS: Project[] = [
+  {
+    slug: "bic-rec",
+    name: "BIC-REC Website",
+    year: "2026",
+    summary:
+      "The official website of the Blockchain Innovation Club at Rajalakshmi Engineering College, built on a neo-brutalist design system.",
+    description:
+      "One home for the club: a filterable event ledger with detail pages, achievements, board and core team profiles, a gallery, news, the club's own projects, learning resources, membership info and a contact form. I built it on my own, from the design system to the tests and the automatic deploys.",
+    tags: ["React", "Vite", "Tailwind CSS", "React Router", "Motion", "Playwright", "Firebase Hosting"],
+    repoUrl: "https://github.com/SaIdEeVaN/BIC-REC_Site",
+    liveUrl: "https://bicrec.web.app",
+    facts: [
+      { label: "Year", value: "2026" },
+      { label: "Club", value: "Blockchain Innovation Club, REC" },
+      { label: "Frontend", value: "React 18, Vite, Tailwind CSS, React Router v7" },
+      { label: "Hosting", value: "Firebase Hosting, deployed by GitHub Actions" },
+    ],
+    // GitHub's language breakdown for the repo (bytes); it only has three.
+    languages: [
+      { name: "JavaScript", bytes: 159_339 },
+      { name: "CSS", bytes: 11_223 },
+      { name: "HTML", bytes: 6_993 },
+    ],
+    languagesSource: "All three languages by bytes of code, from GitHub, September 2026.",
+    pipelineNote:
+      "Every page follows one design spec, and a push to main is all it takes to put a change live.",
+    pipeline: [
+      {
+        title: "Design system",
+        text: "Hard geometry, 3px ink rules, hard offset shadows and blockchain vocabulary: block numbers, hashes, sealed dates.",
+        tool: "DESIGN_SYSTEM.md + Tailwind tokens",
+      },
+      {
+        title: "Motion kit",
+        text: "Blocks shunt, slam, draw and decrypt, using a small set of animation primitives shared by every page.",
+        tool: "Motion",
+      },
+      {
+        title: "Share previews",
+        text: "The build writes an HTML file for each route, so links shared on WhatsApp or LinkedIn preview the right page.",
+        tool: "Vite + prerender script",
+      },
+      {
+        title: "Tests",
+        text: "Every page is loaded at phone and desktop widths and checked for layout, titles and share tags.",
+        tool: "Playwright",
+      },
+      {
+        title: "Deploy",
+        text: "Each push to main installs, builds and deploys the site with no manual steps.",
+        tool: "GitHub Actions + Firebase",
+      },
+    ],
+    rules: [
+      {
+        title: "No sideways scroll",
+        text: "Playwright opens every page at 360, 390 and 1280px and fails if anything is wider than the screen.",
+      },
+      {
+        title: "Every route has its own preview",
+        text: "Each route gets its own title and share tags at build time, and the tests check that they match.",
+      },
+      {
+        title: "Reduced motion skips animation",
+        text: "With the OS reduce-motion setting on, every page renders in its final state straight away.",
+      },
+    ],
+  },
   {
     slug: "voicepath",
     name: "VoicePath",

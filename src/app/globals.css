@@ -1407,6 +1407,12 @@ video {
   gap: clamp(56px, 8vw, 104px);
 }
 
+.project + .project {
+  margin-top: clamp(80px, 11vw, 160px);
+  padding-top: clamp(56px, 8vw, 104px);
+  border-top: var(--bw) solid var(--ink);
+}
+
 .project__intro {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
