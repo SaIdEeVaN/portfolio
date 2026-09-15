@@ -24,10 +24,10 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     slug: "bic-rec",
-    name: "BIC-REC Website",
+    name: "Blockchain Innovation Club, REC",
     year: "2026",
     summary:
-      "The official website of the Blockchain Innovation Club at Rajalakshmi Engineering College, built on a neo-brutalist design system.",
+      "The club's official website at Rajalakshmi Engineering College, built on a neo-brutalist design system.",
     description:
       "One home for the club: a filterable event ledger with detail pages, achievements, board and core team profiles, a gallery, news, the club's own projects, learning resources, membership info and a contact form. I built it on my own, from the design system to the tests and the automatic deploys.",
     tags: ["React", "Vite", "Tailwind CSS", "React Router", "Motion", "Playwright", "Firebase Hosting"],
@@ -35,7 +35,7 @@ export const PROJECTS: Project[] = [
     liveUrl: "https://bicrec.web.app",
     facts: [
       { label: "Year", value: "2026" },
-      { label: "Club", value: "Blockchain Innovation Club, REC" },
+      { label: "Role", value: "Sole developer" },
       { label: "Frontend", value: "React 18, Vite, Tailwind CSS, React Router v7" },
       { label: "Hosting", value: "Firebase Hosting, deployed by GitHub Actions" },
     ],

@@ -1,3 +1,4 @@
+import { PageLink } from "./PageTransition";
 import ScrollReveal from "./ScrollReveal";
 
 export type TimelineItem = {
@@ -7,6 +8,7 @@ export type TimelineItem = {
   end: string;
   summary?: string;
   highlights?: string[];
+  link?: { href: string; label: string };
 };
 
 export default function Timeline({ items }: { items: TimelineItem[] }) {
@@ -37,6 +39,13 @@ export default function Timeline({ items }: { items: TimelineItem[] }) {
                       <li key={highlight}>{highlight}</li>
                     ))}
                   </ul>
+                ) : null}
+
+                {item.link ? (
+                  <PageLink href={item.link.href} className="row__link">
+                    {item.link.label}
+                    <span aria-hidden="true">→</span>
+                  </PageLink>
                 ) : null}
               </div>
 

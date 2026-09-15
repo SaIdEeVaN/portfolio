@@ -16,6 +16,8 @@ import { readMotion, REDUCED_MOTION_QUERY } from "../lib/preferences";
 
 type Wipe = {
   href: string;
+  path: string;
+  hash: string;
   label: string;
   accent: string;
   phase: "in" | "hold" | "out";
@@ -28,6 +30,13 @@ const ARRIVE_SETTLE_MS = 90;
 // If the route never commits (offline, error), uncover the screen anyway.
 const NAVIGATION_TIMEOUT_MS = 6000;
 
+// "/projects#bic-rec" → { path: "/projects", hash: "bic-rec" }
+function splitHref(href: string) {
+  const index = href.indexOf("#");
+  if (index === -1) return { path: href, hash: "" };
+  return { path: href.slice(0, index), hash: decodeURIComponent(href.slice(index + 1)) };
+}
+
 // Returns true when the transition layer has taken over the navigation.
 const PageTransitionContext = createContext<(href: string) => boolean>(() => false);
 
@@ -39,17 +48,22 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const begin = useCallback(
     (href: string) => {
       const reduced = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+      const { path, hash } = splitHref(href);
 
-      if (href === pathname) {
+      if (!path || path === pathname) {
+        // Same page: let the link jump to its anchor, or glide back to the top.
+        if (hash) return false;
         window.scrollTo({ top: 0, behavior: reduced ? "instant" : "smooth" });
         return true;
       }
       if (wipe) return true;
       if (reduced || readMotion() === "restrained") return false;
 
-      const page = findPage(href);
+      const page = findPage(path);
       setWipe({
         href,
+        path,
+        hash,
         label: page?.label ?? "Loading",
         accent: page?.accent ?? "a1",
         phase: "in",
@@ -70,10 +84,15 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
         router.push(wipe.href, { scroll: false });
       }, WIPE_IN_MS + WIPE_HOLD_MS);
     } else if (wipe.phase === "hold") {
-      const arrived = pathname === wipe.href;
+      const arrived = pathname === wipe.path;
       timer = window.setTimeout(
         () => {
-          window.scrollTo({ top: 0, behavior: "instant" });
+          const target = wipe.hash ? document.getElementById(wipe.hash) : null;
+          if (target) {
+            target.scrollIntoView({ behavior: "instant", block: "start" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }
           document.getElementById("content")?.focus({ preventScroll: true });
           setWipe({ ...wipe, phase: "out" });
         },

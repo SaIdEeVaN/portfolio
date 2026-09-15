@@ -6,34 +6,49 @@ Last updated: 2026-09-15
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Projects page has two case studies, newest first: the BIC-REC club website, then VoicePath. Details come from each project's README.
-- Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present).
+- Projects page has two case studies, newest first: Blockchain Innovation Club, REC (the club website), then VoicePath. Details come from each project's README.
+- Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to the club website case study.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
 
-## Done: add the BIC-REC club website to Projects (committed, not pushed)
+## Follow-ups
+
+- [ ] At 360px wide, the "Code by language" box (300px ring plus padding) is 346px in a 328px column, so both case studies are clipped about 18px on the right. It was already happening on VoicePath; `LanguageRing` wasn't changed. 390px and wider are fine.
+
+## Done: rename the club project, link the role, push (on `main`)
+
+- [x] Rename the project to "Blockchain Innovation Club, REC". The summary no longer repeats the club name, the "Club" fact became "Role: Sole developer", and the Projects blurb now reads "The Blockchain Innovation Club website and VoicePath."
+- [x] Link the Technology Executive role on Experience to the case study. The row now has a "See the club website I built →" button that goes to `/projects#bic-rec`.
+- [x] Fix the page wipe for links with a `#hash`. It used to wait for its 6s timeout and then scroll to the top. Now it shows the right page name, detects arrival by path, and scrolls to the anchor.
+- [x] Check that the jump lands with the title visible. `.project` got a `scroll-margin-top`, so the title sits 33px below the nav on desktop and 17px below it on phones.
+- [x] Verify:
+  - [x] Lint clean, `tsc --noEmit` clean, `next build` passes
+  - [x] Headless Chrome: the title's widest word ("Blockchain") fits at 1440, 1280, 1024, 768, 390 and 360px, wrapping to 3 lines
+  - [x] The link lands on `/projects#bic-rec` with motion on (the wipe reads "Projects") and with reduced motion, at 1440px and 390px, with no console errors
+- [x] Update STATUS.md, commit, push to `main`
+
+## Done: add the BIC-REC club website to Projects (`82f5540`)
 
 Live at https://bicrec.web.app, code at https://github.com/SaIdEeVaN/BIC-REC_Site.
 
 - [x] Gather facts from the repo and live site. README, `package.json`, deploy workflow and GitHub languages all read. Findings are below.
-- [x] Confirm with Sai: built it solo, year 2026, list it above VoicePath. Name "BIC-REC Website" (default; no answer). Experience link skipped for now.
+- [x] Confirm with Sai: built it solo, year 2026, list it above VoicePath. (Name later changed to "Blockchain Innovation Club, REC", and the Experience link was added; see above.)
 - [x] Add a `bic-rec` entry to `src/app/lib/projects.ts`
   - [x] Name, year, summary and description (official site of the Blockchain Innovation Club, REC: events, team, gallery, projects, resources, join, contact)
   - [x] Tags: React, Vite, Tailwind CSS, React Router, Motion, Playwright, Firebase Hosting
   - [x] `repoUrl` and `liveUrl`
-  - [x] Four facts: Year, Club, Frontend, Hosting
+  - [x] Four facts: Year, Club (now Role), Frontend, Hosting
   - [x] Languages from GitHub: JavaScript 159,339, CSS 11,223, HTML 6,993 bytes. `languagesSource` note updated.
   - [x] "How it works", five steps (the pipeline grid has five columns): design system → motion kit → share previews → Playwright tests → GitHub Actions + Firebase deploy
   - [x] "Rules the code enforces", three rules (the grid has three columns), each backed by the repo: no sideways scroll at 360/390/1280px; every route has its own title and share tags; reduced motion renders the final state. "Nothing fades or blurs" was dropped because it's a design convention, not something the code checks.
-- [x] Check the layout. `LanguageRing` looks right with three languages. A new `.project + .project` rule (3px top rule plus spacing) separates the two case studies. "BIC-REC WEBSITE" wraps to two lines at 1440px and 390px without overflowing.
-- [x] Project order: BIC-REC above VoicePath
+- [x] Check the layout. `LanguageRing` looks right with three languages. A new `.project + .project` rule (3px top rule plus spacing) separates the two case studies.
+- [x] Project order: club website above VoicePath
 - [x] Update the copy that names only VoicePath: the `/projects` metadata description and the Projects blurb in `src/app/lib/pages.ts`
-- [ ] Optional: link the Technology Executive role on Experience to the new case study (skipped for now)
 - [x] Verify lint, types, build, and the page in Chrome at 1440px and 390px (console errors, overflow, reduced motion)
   - [x] `node_modules` was missing; reinstalled with `npm ci`
   - [x] Lint clean, `tsc --noEmit` clean, `next build` passes (14 static pages)
   - [x] Browser check in headless Chrome over DevTools, since the Chrome extension wasn't connected. Ran at 1440px, 390px, and 390px with reduced motion. No horizontal overflow and no console errors or warnings. The ring and legend show 3 languages, with 5 steps and 3 rules, and the separator appears only on the second case study. Screenshots of each section checked.
 - [x] Update "Where things stand" and commit to `main`
-- [ ] Push to `main` after Sai has reviewed the new copy
+- [x] Push to `main` (together with the rename and role link)
 
 Repo facts: React 18.3, Vite 8, Tailwind 3.4, React Router 7, Motion 13.2, Playwright 1.63, ESLint 10. `npm run build` also writes an HTML file for each route with its own share tags. GitHub Actions deploys to the Firebase project `bicrec` on every push to `main`. The site has 14 pages and follows its own neo-brutalist `DESIGN_SYSTEM.md`.
 
@@ -67,3 +82,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - Chart animations play when the chart scrolls into view and are skipped for OS reduced motion. Restrained motion turns off Motion's transform and layout animations site-wide.
 - Case studies on `/projects` are listed newest first.
 - A case study's "Rules the code enforces" lists only rules the project's build or tests actually check.
+- `PageLink` accepts `/page#id` links: the page wipe runs as usual, then scrolls to that id instead of the top.
