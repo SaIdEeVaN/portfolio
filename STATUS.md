@@ -34,7 +34,7 @@ Last updated: 2026-09-24
   - [x] Lint clean, `next build` passes (23 static pages and images), `tsc --noEmit` clean
   - [x] All 70 browser tests pass locally
   - [x] Screenshots checked: `/projects` at 1440 and 390px, a project page at 1440 and 390px, the next-project card, the About next-page card at 320px, and all three preview images
-  - [ ] First GitHub Actions run on `main`: see below
+  - [x] First GitHub Actions run on `main` (`7b36109`) passed: lint, build, type check and all 70 browser tests, in about 4 minutes
 - [x] Update CLAUDE.md, README and STATUS.md, commit, push to `main`
 
 ## Done: add the chess engine to Projects, and write CLAUDE.md (on `main`)
