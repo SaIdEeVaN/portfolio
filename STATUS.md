@@ -1,14 +1,36 @@
 # Status
 
-Last updated: 2026-09-15
+Last updated: 2026-09-24
 
 ## Where things stand
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Projects page has two case studies, newest first: Blockchain Innovation Club, REC (the club website), then VoicePath. Details come from each project's README.
+- Projects page has three case studies, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. Details come from each project's README and code. Chess Engine is also the featured project on the home page.
+- `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to the club website case study.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: add the chess engine to Projects, and write CLAUDE.md (on `main`)
+
+Live at https://foai-chess-engine.web.app, code at https://github.com/SaIdEeVaN/FOAI-Project.
+
+- [x] Gather facts from the repo: README, `PRD.md`, `status.md`, `package.json`, deploy workflow, and the engine code for each claim on the page (2s budget checked every 2,048 nodes, Web Worker, 60s teaching-mode limit)
+- [x] Add a `chess-engine` entry to `src/app/lib/projects.ts`, first in the list
+  - [x] Named "Chess Engine", not the Firebase project name `foai-chess-engine`
+  - [x] Tags: JavaScript, React, Vite, Web Workers, GitHub Actions, Firebase Hosting
+  - [x] Four facts: Year, Course (Foundations of Artificial Intelligence), Engine, Frontend
+  - [x] Languages: JavaScript 92,035, CSS 23,350, HTML 742 bytes. GitHub's API isn't reachable from this session, so these are counted from the repo the way GitHub counts them (`.js` and `.jsx` as JavaScript; JSON, SVG and Markdown left out). `languagesSource` says so.
+  - [x] "How it works", five steps: move generation → evaluation → search → ordering and caching → teaching mode
+  - [x] "Rules the code enforces", three rules, each checked in the code: search runs in a Web Worker; a move is always ready within the 2s budget; teaching-mode searches stop at 60s
+- [x] Update the copy that names the projects: the Projects blurb in `src/app/lib/pages.ts` and the `/projects` metadata description
+- [x] Replace the one-line `CLAUDE.md` with a real one. It still imports `AGENTS.md`, and adds: push directly to `main`, commands and checks, where things live, how to add a project, and design conventions.
+- [x] Verify:
+  - [x] Lint clean, `tsc --noEmit` clean, `next build` passes (14 static pages)
+  - [x] Headless Chromium at 320, 360, 390, 768 and 1440px, plus 390px with reduced motion, on `/projects` and `/`. Nothing runs past the viewport. Case studies are in order (chess-engine, bic-rec, voicepath). The ring is 242px at 320, 282px at 360 and 300px from 390 up, with 3 languages, 5 steps and 3 rules. The home page features Chess Engine. No console errors or warnings.
+  - [x] Screenshots checked at 360 and 1440px, plus the home page feature
+  - [ ] Not checked from this session: the live chess site itself (the egress proxy blocks `*.web.app`)
+- [x] Update STATUS.md, commit, push to `main`
 
 ## Done: fix the 360px overflow on Projects (on `main`)
 
@@ -94,4 +116,6 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - Case studies on `/projects` are listed newest first.
 - A case study's "Rules the code enforces" lists only rules the project's build or tests actually check.
 - `PageLink` accepts `/page#id` links: the page wipe runs as usual, then scrolls to that id instead of the top.
+- Work is committed and pushed straight to `main`, with no feature branches or pull requests (written into `CLAUDE.md`).
+- A project's display name is a readable title, not its repo or hosting slug ("Chess Engine", not "foai-chess-engine").
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.

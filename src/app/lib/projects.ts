@@ -23,6 +23,74 @@ export type Project = {
 // Details are taken from each project's README, linked in repoUrl.
 export const PROJECTS: Project[] = [
   {
+    slug: "chess-engine",
+    name: "Chess Engine",
+    year: "2026",
+    summary:
+      "Play chess in the browser against a search engine written from scratch, then watch what each search technique saves.",
+    description:
+      "Built for the Foundations of Artificial Intelligence course. The opponent is a classical engine — minimax with alpha-beta pruning, iterative deepening, quiescence search, MVV-LVA move ordering and a Zobrist-hashed transposition table — running in a Web Worker so the board never freezes. Teaching mode searches the position on the board three ways at a fixed depth: from the opening, alpha-beta cuts plain minimax's 5,072,213 nodes to 113,360.",
+    tags: ["JavaScript", "React", "Vite", "Web Workers", "GitHub Actions", "Firebase Hosting"],
+    repoUrl: "https://github.com/SaIdEeVaN/FOAI-Project",
+    liveUrl: "https://foai-chess-engine.web.app",
+    facts: [
+      { label: "Year", value: "2026" },
+      { label: "Course", value: "Foundations of Artificial Intelligence" },
+      { label: "Engine", value: "Minimax with alpha-beta, in a Web Worker" },
+      { label: "Frontend", value: "React 19, Vite 8, plain CSS" },
+    ],
+    // Counted from the repo the way GitHub does (bytes); it only has three.
+    languages: [
+      { name: "JavaScript", bytes: 92_035 },
+      { name: "CSS", bytes: 23_350 },
+      { name: "HTML", bytes: 742 },
+    ],
+    languagesSource: "All three languages by bytes of code, counted from the repo, September 2026.",
+    pipelineNote:
+      "The whole engine runs in the browser, with no server, so nothing about a game leaves the page.",
+    pipeline: [
+      {
+        title: "Move generation",
+        text: "Legal moves for every piece, including castling, en passant and promotion, checked against perft counts.",
+        tool: "Custom board + move generator",
+      },
+      {
+        title: "Evaluation",
+        text: "Each position is scored in centipawns from five terms: material, piece-square tables, pawn structure, king safety and mobility.",
+        tool: "Hand-written evaluation",
+      },
+      {
+        title: "Search",
+        text: "Minimax with alpha-beta goes one ply deeper at a time, and follows captures past the last ply so it doesn't stop mid-exchange.",
+        tool: "Iterative deepening + quiescence",
+      },
+      {
+        title: "Ordering and caching",
+        text: "The stored best move is tried first, then captures by most valuable victim, and a position reached again reuses its stored result.",
+        tool: "MVV-LVA + Zobrist transposition table",
+      },
+      {
+        title: "Teaching mode",
+        text: "The position on the board is searched three ways at depth 5, comparing nodes, time and the move each one picks.",
+        tool: "Fixed-depth search with switchable techniques",
+      },
+    ],
+    rules: [
+      {
+        title: "The board never waits on the engine",
+        text: "Every search runs in a Web Worker and streams its progress back, so the page stays responsive while the engine thinks.",
+      },
+      {
+        title: "A move is always ready",
+        text: "The engine has 2 seconds a move, checked every 2,048 nodes; a depth cut short is thrown away and the last finished one plays.",
+      },
+      {
+        title: "Teaching searches can't hang",
+        text: "A comparison that passes 60 seconds stops and reports its node count as a lower bound instead of freezing the screen.",
+      },
+    ],
+  },
+  {
     slug: "bic-rec",
     name: "Blockchain Innovation Club, REC",
     year: "2026",

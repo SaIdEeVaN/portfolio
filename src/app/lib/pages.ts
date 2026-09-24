@@ -25,7 +25,7 @@ export const PAGES = [
     slug: "projects",
     label: "Projects",
     accent: "a2",
-    blurb: "The Blockchain Innovation Club website and VoicePath.",
+    blurb: "A chess engine, the Blockchain Innovation Club website and VoicePath.",
   },
   {
     href: "/education",
