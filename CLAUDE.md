@@ -29,8 +29,8 @@ The browser tests (`tests/site.spec.ts`) open every page and every project page 
 768 and 1440px, and at 390px with reduced motion. They fail if anything runs past the right edge,
 a heading is wider than its box, or the console logs an error. They also check each page's title,
 the project pages' share tags and preview images, the 404 for an unknown project, the sitemap, and
-the links into project pages. Third-party images (skill and contact icons) are replaced with a
-placeholder, so a CDN outage can't fail them.
+the links into project pages. Any request to another site fails them too, since every icon,
+font and image is served by this site.
 
 Before the first run: `npx playwright install chromium`. On a machine whose preinstalled Chromium
 doesn't match this Playwright version, point at it with `PLAYWRIGHT_CHROMIUM_PATH` instead.
@@ -54,6 +54,10 @@ whether it looks right.
   installed from the registries in `components.json`. Keep the chart code as upstream wrote it;
   its two lint exceptions are in `eslint.config.mjs`.
 - `src/app/globals.css`: design tokens and all site styles.
+- `public/skills` and `public/contact`: the skill and contact icons, copied in rather than loaded
+  from a CDN. Where each set came from is noted above the lists in
+  `src/app/components/SkillsLogoGrid.tsx` and `src/app/contact/page.tsx`. A new icon goes here
+  too; don't link to jsDelivr or another site.
 
 ## Adding a project
 

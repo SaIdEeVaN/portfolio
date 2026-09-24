@@ -8,34 +8,21 @@ const ROUTES = [
 ];
 const WIDTHS = [320, 360, 390, 768, 1440];
 
-// A 1×1 transparent PNG.
-const PIXEL = Buffer.from(
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
-  "base64",
-);
-
-// Skill and contact icons come from other sites (jsDelivr, nmap.org). Serve a placeholder for them,
-// so the tests check this site's own code and don't pass or fail with someone else's CDN.
-test.beforeEach(async ({ page, baseURL }) => {
+// Collects console errors, uncaught exceptions and requests to other sites for the whole test.
+// Every icon, font and image is served by this site, so a request elsewhere is a regression.
+function watchErrors(page: Page, baseURL: string | undefined) {
   const origin = new URL(baseURL!).origin;
-  await page.route(
-    (url) =>
-      url.origin !== origin ||
-      (url.pathname === "/_next/image" && /^https?:/.test(url.searchParams.get("url") ?? "")),
-    (route) =>
-      route.request().resourceType() === "image"
-        ? route.fulfill({ contentType: "image/png", body: PIXEL })
-        : route.continue(),
-  );
-});
-
-// Collects console errors and uncaught exceptions for the whole test.
-function watchErrors(page: Page) {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
   });
   page.on("pageerror", (error) => errors.push(error.message));
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.protocol.startsWith("http") && url.origin !== origin) {
+      errors.push(`request to another site: ${request.url()}`);
+    }
+  });
   return errors;
 }
 
@@ -88,8 +75,8 @@ for (const width of WIDTHS) {
     test.use({ viewport: { width, height: 900 } });
 
     for (const route of ROUTES) {
-      test(`${route} fits the screen with no errors`, async ({ page }) => {
-        const errors = watchErrors(page);
+      test(`${route} fits the screen with no errors`, async ({ page, baseURL }) => {
+        const errors = watchErrors(page, baseURL);
         await open(page, route);
         expect(await findOverflow(page)).toEqual([]);
         expect(errors).toEqual([]);
@@ -102,8 +89,8 @@ test.describe("with reduced motion", () => {
   test.use({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
 
   for (const route of ROUTES) {
-    test(`${route} fits the screen with no errors`, async ({ page }) => {
-      const errors = watchErrors(page);
+    test(`${route} fits the screen with no errors`, async ({ page, baseURL }) => {
+      const errors = watchErrors(page, baseURL);
       await open(page, route);
       expect(await findOverflow(page)).toEqual([]);
       expect(errors).toEqual([]);

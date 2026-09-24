@@ -6,27 +6,30 @@ type SkillLogo = {
   src: string;
 };
 
+// Icons are served from public/skills. Sources: devicon 2.17.0 (MIT) for the language and
+// framework logos, Simple Icons 16.32.0 (CC0) for Wireshark, Metasploit and Bash, and Nmap's eye
+// logo from the Windows icon in the nmap/nmap repository.
 const SKILLS: SkillLogo[] = [
-  { name: "Linux", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-  { name: "Nmap", src: "https://nmap.org/images/nmap-logo-256x256.png" },
-  { name: "Wireshark", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wireshark.svg" },
-  { name: "Metasploit", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/metasploit.svg" },
-  { name: "Shell Scripting", src: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gnubash.svg" },
-  { name: "Java", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-  { name: "HTML", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-  { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "Linux", src: "/skills/linux.svg" },
+  { name: "Nmap", src: "/skills/nmap.png" },
+  { name: "Wireshark", src: "/skills/wireshark.svg" },
+  { name: "Metasploit", src: "/skills/metasploit.svg" },
+  { name: "Shell Scripting", src: "/skills/bash.svg" },
+  { name: "Java", src: "/skills/java.svg" },
+  { name: "HTML", src: "/skills/html.svg" },
+  { name: "CSS", src: "/skills/css.svg" },
+  { name: "JavaScript", src: "/skills/javascript.svg" },
   { name: "C", src: "/skills/c.png" },
-  { name: "C++", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-  { name: "R", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" },
-  { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-  { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "Next.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-  { name: "Tailwind CSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-  { name: "Django", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-  { name: "MySQL", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "MongoDB", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+  { name: "C++", src: "/skills/cplusplus.svg" },
+  { name: "R", src: "/skills/r.svg" },
+  { name: "Python", src: "/skills/python.svg" },
+  { name: "TypeScript", src: "/skills/typescript.svg" },
+  { name: "React", src: "/skills/react.svg" },
+  { name: "Next.js", src: "/skills/nextjs.svg" },
+  { name: "Tailwind CSS", src: "/skills/tailwindcss.svg" },
+  { name: "Django", src: "/skills/django.svg" },
+  { name: "MySQL", src: "/skills/mysql.svg" },
+  { name: "MongoDB", src: "/skills/mongodb.svg" },
 ];
 
 const TILE_ACCENTS = ["a1", "a2", "a3", "a4"] as const;
@@ -59,7 +62,6 @@ export default function SkillsLogoGrid() {
     <ul className="stack">
       {SKILLS.map((skill, index) => {
         const isSvg = skill.src.toLowerCase().endsWith(".svg");
-        const isLocalRaster = skill.src.startsWith("/") && !isSvg;
 
         return (
           <ScrollReveal as="li" key={skill.name} delayMs={Math.min(index, 12) * 35}>
@@ -71,7 +73,7 @@ export default function SkillsLogoGrid() {
                   height={30}
                   alt=""
                   unoptimized={isSvg}
-                  style={isLocalRaster ? { width: 30, height: 30 } : undefined}
+                  style={isSvg ? undefined : { width: 30, height: 30 }}
                 />
               </span>
               <span className="tile__name">{skill.name}</span>

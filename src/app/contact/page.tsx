@@ -21,12 +21,14 @@ type ContactItem = {
   wide?: boolean;
 };
 
+// Icons are served from public/contact, from Simple Icons (CC0): 16.32.0, except LinkedIn, which
+// left the set after 13.21.0.
 const CONTACTS: ContactItem[] = [
   {
     label: "Email",
     value: "saideevan@gmail.com",
     href: "mailto:saideevan@gmail.com",
-    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gmail.svg",
+    iconSrc: "/contact/gmail.svg",
     external: false,
     wide: true,
   },
@@ -34,28 +36,28 @@ const CONTACTS: ContactItem[] = [
     label: "WhatsApp",
     value: "+91 88382 91379",
     href: "https://wa.me/918838291379",
-    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/whatsapp.svg",
+    iconSrc: "/contact/whatsapp.svg",
     external: true,
   },
   {
     label: "GitHub",
     value: "SaIdEeVaN",
     href: "https://github.com/SaIdEeVaN",
-    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg",
+    iconSrc: "/contact/github.svg",
     external: true,
   },
   {
     label: "LinkedIn",
     value: "bavirisetty-sai-deevan",
     href: "https://linkedin.com/in/bavirisetty-sai-deevan",
-    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg",
+    iconSrc: "/contact/linkedin.svg",
     external: true,
   },
   {
     label: "Instagram",
     value: "_._saideevan_._",
     href: "https://www.instagram.com/_._saideevan_._/",
-    iconSrc: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg",
+    iconSrc: "/contact/instagram.svg",
     external: true,
   },
 ];

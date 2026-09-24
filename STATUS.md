@@ -8,9 +8,29 @@ Last updated: 2026-09-24
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
 - Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page.
 - GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
+- Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: serve the skill and contact icons from the site (on `main`)
+
+The Skills and Contact icons loaded from jsDelivr (`@latest`) and nmap.org, so a change or outage there could break them.
+
+- [x] Copy every icon into `public/skills` (20) and `public/contact` (5), taken from the npm packages rather than the CDN (this session's network blocks jsDelivr and nmap.org, but not npm or GitHub)
+  - [x] Language and framework logos: devicon 2.17.0 (MIT), the same files the CDN served
+  - [x] Wireshark, Metasploit, Bash and the contact icons: Simple Icons 16.32.0 (CC0)
+  - [x] LinkedIn: Simple Icons removed it after 13.21.0, so `simple-icons@latest/icons/linkedin.svg` no longer exists and the live Contact page was most likely showing a broken image. It now uses the 13.21.0 file, which matches the other contact icons
+  - [x] Nmap: not in either set. Taken from Nmap's own eye logo, the 256px image in `zenmap/install_scripts/windows/nmap-eye.ico` in the nmap/nmap repository, converted to PNG
+- [x] Point `SkillsLogoGrid.tsx` and the Contact page at the local files, with a note on where each set came from
+- [x] Remove the `images.remotePatterns` allowlist from `next.config.ts`; nothing loads from another site now
+- [x] Delete the unused Next.js starter SVGs in `public/` (`file`, `globe`, `next`, `vercel`, `window`)
+- [x] Tests: drop the placeholder for third-party images, and fail on any request to another site instead. Checked that the guard works: pointing the Gmail icon back at jsDelivr fails the `/contact` test with "request to another site"
+- [x] Verify:
+  - [x] Lint clean, `next build` passes, `tsc --noEmit` clean
+  - [x] All 70 browser tests pass, now with the real icons loading
+  - [x] `/skills` and `/contact` in Chromium at 1280px: every icon loads (no failed requests, no broken images), screenshots checked
+- [x] Update CLAUDE.md and STATUS.md, commit, push to `main`
 
 ## Done: a page for each project, and CI with browser tests (on `main`)
 
@@ -143,7 +163,7 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - A case study's "Rules the code enforces" lists only rules the project's build or tests actually check.
 - `PageLink` accepts `/page#id` links: the page wipe runs as usual, then scrolls to that id instead of the top.
 - Each project has its own page at `/projects/<slug>`; `/projects` is the list. Old `/projects#slug` links still work.
-- Browser tests serve a placeholder for third-party images, so they test this site's code rather than someone else's CDN.
+- Icons are copied into `public/` instead of loaded from a CDN, and the browser tests fail on any request to another site. (This replaced an earlier approach, where the tests served a placeholder for third-party images.)
 - CI runs after each push to `main` rather than gating it, since work goes straight to `main`.
 - Work is committed and pushed straight to `main`, with no feature branches or pull requests (written into `CLAUDE.md`).
 - A project's display name is a readable title, not its repo or hosting slug ("Chess Engine", not "foai-chess-engine").
