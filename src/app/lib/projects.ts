@@ -35,17 +35,17 @@ export const PROJECTS: Project[] = [
     liveUrl: "https://foai-chess-engine.web.app",
     facts: [
       { label: "Year", value: "2026" },
-      { label: "Course", value: "Foundations of Artificial Intelligence" },
+      { label: "Role", value: "Sole developer" },
       { label: "Engine", value: "Minimax with alpha-beta, in a Web Worker" },
       { label: "Frontend", value: "React 19, Vite 8, plain CSS" },
     ],
-    // Counted from the repo the way GitHub does (bytes); it only has three.
+    // GitHub's language breakdown for the repo (bytes); it only has three.
     languages: [
       { name: "JavaScript", bytes: 92_035 },
       { name: "CSS", bytes: 23_350 },
       { name: "HTML", bytes: 742 },
     ],
-    languagesSource: "All three languages by bytes of code, counted from the repo, September 2026.",
+    languagesSource: "All three languages by bytes of code, from GitHub, September 2026.",
     pipelineNote:
       "The whole engine runs in the browser, with no server, so nothing about a game leaves the page.",
     pipeline: [

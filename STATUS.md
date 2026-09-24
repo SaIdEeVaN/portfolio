@@ -19,8 +19,8 @@ Live at https://foai-chess-engine.web.app, code at https://github.com/SaIdEeVaN/
 - [x] Add a `chess-engine` entry to `src/app/lib/projects.ts`, first in the list
   - [x] Named "Chess Engine", not the Firebase project name `foai-chess-engine`
   - [x] Tags: JavaScript, React, Vite, Web Workers, GitHub Actions, Firebase Hosting
-  - [x] Four facts: Year, Course (Foundations of Artificial Intelligence), Engine, Frontend
-  - [x] Languages: JavaScript 92,035, CSS 23,350, HTML 742 bytes. GitHub's API isn't reachable from this session, so these are counted from the repo the way GitHub counts them (`.js` and `.jsx` as JavaScript; JSON, SVG and Markdown left out). `languagesSource` says so.
+  - [x] Four facts: Year, Role, Engine, Frontend. Role was first "Course"; Sai confirmed it was a solo build, so it is now "Role: Sole developer" like the club website. The course is still named in the description.
+  - [x] Languages from GitHub: JavaScript 92,035, CSS 23,350, HTML 742 bytes. The API was blocked at first because the repo wasn't attached to the session, so they were counted from the repo instead. Once it was attached, GitHub's API returned the same three numbers, and `languagesSource` now says "from GitHub" like the other projects.
   - [x] "How it works", five steps: move generation → evaluation → search → ordering and caching → teaching mode
   - [x] "Rules the code enforces", three rules, each checked in the code: search runs in a Web Worker; a move is always ready within the 2s budget; teaching-mode searches stop at 60s
 - [x] Update the copy that names the projects: the Projects blurb in `src/app/lib/pages.ts` and the `/projects` metadata description
