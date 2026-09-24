@@ -229,3 +229,25 @@ export const PROJECTS: Project[] = [
     ],
   },
 ];
+
+// Each case study has its own page at /projects/<slug>.
+export function projectHref(project: Project) {
+  return `/projects/${project.slug}`;
+}
+
+export function getProject(slug: string): Project | undefined {
+  return PROJECTS.find((project) => project.slug === slug);
+}
+
+// The one after it in PROJECTS, wrapping around to the first.
+export function getNextProject(project: Project): Project {
+  const index = PROJECTS.indexOf(project);
+  return PROJECTS[(index + 1) % PROJECTS.length];
+}
+
+// Card and next-link colors, cycled by position. Projects' own accent (a2) colors the page header.
+const PROJECT_ACCENTS = ["a4", "a3", "a1"] as const;
+
+export function projectAccent(project: Project) {
+  return PROJECT_ACCENTS[PROJECTS.indexOf(project) % PROJECT_ACCENTS.length];
+}

@@ -30,15 +30,20 @@ const ARRIVE_SETTLE_MS = 90;
 // If the route never commits (offline, error), uncover the screen anyway.
 const NAVIGATION_TIMEOUT_MS = 6000;
 
-// "/projects#bic-rec" → { path: "/projects", hash: "bic-rec" }
+// "/about#skills" → { path: "/about", hash: "skills" }
 function splitHref(href: string) {
   const index = href.indexOf("#");
   if (index === -1) return { path: href, hash: "" };
   return { path: href.slice(0, index), hash: decodeURIComponent(href.slice(index + 1)) };
 }
 
+// A page below a top-level one (/projects/chess-engine) takes its parent's label and color.
+function findSection(path: string) {
+  return findPage(path) ?? findPage(`/${path.split("/")[1]}`);
+}
+
 // Returns true when the transition layer has taken over the navigation.
-const PageTransitionContext = createContext<(href: string) => boolean>(() => false);
+const PageTransitionContext = createContext<(href: string, label?: string) => boolean>(() => false);
 
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -46,7 +51,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const [wipe, setWipe] = useState<Wipe | null>(null);
 
   const begin = useCallback(
-    (href: string) => {
+    (href: string, label?: string) => {
       const reduced = window.matchMedia(REDUCED_MOTION_QUERY).matches;
       const { path, hash } = splitHref(href);
 
@@ -59,12 +64,12 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       if (wipe) return true;
       if (reduced || readMotion() === "restrained") return false;
 
-      const page = findPage(path);
+      const page = findSection(path);
       setWipe({
         href,
         path,
         hash,
-        label: page?.label ?? "Loading",
+        label: label ?? page?.label ?? "Loading",
         accent: page?.accent ?? "a1",
         phase: "in",
       });
@@ -121,9 +126,11 @@ type PageLinkProps = Omit<ComponentProps<typeof Link>, "href" | "onNavigate"> & 
   href: string;
   magnetic?: boolean;
   onNavigate?: () => void;
+  // Shown on the wipe instead of the page's nav label, e.g. a project's name.
+  wipeLabel?: string;
 };
 
-export function PageLink({ href, magnetic, onNavigate, children, ...rest }: PageLinkProps) {
+export function PageLink({ href, magnetic, onNavigate, wipeLabel, children, ...rest }: PageLinkProps) {
   const begin = useContext(PageTransitionContext);
 
   return (
@@ -132,7 +139,7 @@ export function PageLink({ href, magnetic, onNavigate, children, ...rest }: Page
       data-magnetic={magnetic ? "" : undefined}
       onNavigate={(event) => {
         onNavigate?.();
-        if (begin(href)) event.preventDefault();
+        if (begin(href, wipeLabel)) event.preventDefault();
       }}
       {...rest}
     >

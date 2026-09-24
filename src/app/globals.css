@@ -292,7 +292,7 @@ video {
     background-color 140ms linear;
 }
 
-.nav__panel-link[aria-current="page"] {
+.nav__panel-link[aria-current] {
   background: var(--a1);
 }
 
@@ -1298,6 +1298,13 @@ video {
   font-weight: 500;
 }
 
+/* Below 360px the 44px floor lets long titles like "EXPERIENCE" outgrow the card. */
+@media (max-width: 359px) {
+  .next-page__title {
+    font-size: 11cqw;
+  }
+}
+
 /* ── Home: featured project & page index ──────────────── */
 .feature {
   display: grid;
@@ -1433,17 +1440,53 @@ video {
 }
 
 /* ── Projects ─────────────────────────────────────────── */
-.project {
+/* The index: one card per project, each linking to its own page. */
+.project-list {
   display: grid;
-  gap: clamp(56px, 8vw, 104px);
-  /* Breathing room below the sticky nav when opened from a #slug link. */
+  gap: clamp(40px, 6vw, 72px);
+}
+
+.project-list > li {
+  /* Breathing room below the sticky nav when opened from an old /projects#slug link. */
   scroll-margin-top: clamp(20px, 3vw, 36px);
 }
 
-.project + .project {
-  margin-top: clamp(80px, 11vw, 160px);
-  padding-top: clamp(56px, 8vw, 104px);
-  border-top: var(--bw) solid var(--ink);
+.project-list .feature {
+  background: var(--accent);
+}
+
+.project-list .feature__title {
+  font-size: clamp(34px, 8cqw, 120px);
+}
+
+/* Below 360px the 34px floor lets long words like "BLOCKCHAIN" outgrow the card. */
+@media (max-width: 359px) {
+  .project-list .feature__title {
+    font-size: 10cqw;
+  }
+}
+
+/* A project page. */
+.page-header__crumb {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.page-header__crumb:hover {
+  text-decoration: none;
+}
+
+/* Below 360px the 44px floor lets long project names like "BLOCKCHAIN" outgrow the column. */
+@media (max-width: 359px) {
+  .page-header__title {
+    font-size: 12cqw;
+  }
+}
+
+.project {
+  display: grid;
+  gap: clamp(56px, 8vw, 104px);
 }
 
 .project__intro {
@@ -1453,33 +1496,17 @@ video {
   gap: 28px 56px;
 }
 
-.project__title {
-  grid-column: 1 / -1;
-  font-family: var(--f-display);
-  font-size: clamp(44px, 12cqw, 190px);
-  line-height: 0.82;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-/* Below 360px the 44px floor lets long words like "BLOCKCHAIN" outgrow the column. */
-@media (max-width: 359px) {
-  .project__title {
-    font-size: 12cqw;
-  }
-}
-
-.project__summary {
-  max-width: 36ch;
-  font-size: clamp(20px, 2.1vw, 30px);
+.project__description {
+  max-width: 62ch;
+  font-size: clamp(18px, 1.6vw, 22px);
   font-weight: 500;
-  line-height: 1.28;
+  line-height: 1.45;
 }
 
-.project__side {
+.project__built {
   display: grid;
   justify-items: start;
-  gap: 22px;
+  gap: 14px;
 }
 
 .project__actions {

@@ -80,3 +80,71 @@ export function SocialCard() {
     </div>
   );
 }
+
+const PROJECT_TAG_COLORS = ["#FF4D9D", "#00E5FF", "#B8FF3C"];
+
+// A project page's preview: its name, year and first three tags, on the same frame as the site card.
+export function ProjectSocialCard({ name, year, tags }: { name: string; year: string; tags: string[] }) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "56px 72px",
+        background: PAPER,
+        color: INK,
+        border: `14px solid ${INK}`,
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 26, letterSpacing: 6 }}>{`PROJECT · ${year}`}</div>
+
+      <div
+        style={{
+          display: "flex",
+          fontSize: name.length > 16 ? 88 : 112,
+          fontWeight: 900,
+          lineHeight: 0.95,
+        }}
+      >
+        {name.toUpperCase()}
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex" }}>
+          {tags.slice(0, 3).map((tag, index) => (
+            <div
+              key={tag}
+              style={{
+                display: "flex",
+                marginRight: 18,
+                padding: "8px 18px",
+                fontSize: 28,
+                fontWeight: 700,
+                background: PROJECT_TAG_COLORS[index],
+                border: `4px solid ${INK}`,
+              }}
+            >
+              {tag}
+            </div>
+          ))}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            padding: "6px 16px",
+            fontSize: 24,
+            fontWeight: 700,
+            background: "#FFE500",
+            border: `4px solid ${INK}`,
+            boxShadow: `8px 8px 0 ${INK}`,
+          }}
+        >
+          SAI DEEVAN
+        </div>
+      </div>
+    </div>
+  );
+}

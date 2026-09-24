@@ -6,10 +6,36 @@ Last updated: 2026-09-24
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Projects page has three case studies, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. Details come from each project's README and code. Chess Engine is also the featured project on the home page.
+- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page.
+- GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
-- Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to the club website case study.
+- Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: a page for each project, and CI with browser tests (on `main`)
+
+- [x] Each project gets its own page at `/projects/<slug>` (`src/app/projects/[slug]/`)
+  - [x] Built ahead of time from `PROJECTS` (`generateStaticParams`); any other slug is a 404 (`dynamicParams = false`)
+  - [x] Header: `~/projects/<slug>` (the `~/projects` part links back), the project name as the title, the summary as the lede, and the GitHub and live demo buttons. The body is the case study as before, moved into `ProjectCaseStudy.tsx`, with headings one level up (the page's h1 is the project name)
+  - [x] "Next project" link at the bottom, wrapping from the last project to the first
+  - [x] Own title, description and canonical URL. Own share images at `/projects/<slug>/opengraph-image` and `/twitter-image`: project name, year and three tags on the site card's frame. `pageMetadata()` takes an `imagePath` for this, because the page's metadata images win over the image files in this Next version
+  - [x] Added to the sitemap
+- [x] `/projects` is now a list of cards (year, four tags, name, summary, "Read the case study"), each linking to its page. Each card keeps `id=<slug>`, so old `/projects#slug` links still land on the right card
+- [x] Links updated: the home page's featured project and the Experience role now go to the project page
+- [x] Nav: Projects stays marked (and `aria-current="true"`) on project pages. The page wipe shows the project's name when a link passes `wipeLabel`, and otherwise its section's label
+- [x] Playwright suite (`tests/site.spec.ts`, `npm run test:e2e`, 70 tests)
+  - [x] Every page and project page at 320, 360, 390, 768 and 1440px, plus 390px with reduced motion: nothing past the right edge, no heading wider than its box, no console errors
+  - [x] Titles differ on every page; project pages have their own share tags and preview images (both return a PNG); an unknown project is a 404; the sitemap lists every project
+  - [x] Clicking a card, the next-project link and the Experience link each land on the right project page; an old `/projects#bic-rec` link shows that card
+  - [x] Third-party images (jsDelivr and nmap.org icons) get a placeholder, so the tests don't depend on those CDNs. This session's network blocks both hosts, which is how this came up
+- [x] GitHub Actions (`.github/workflows/ci.yml`): `npm ci`, lint, build, type check, install Chromium, browser tests; uploads traces when a test fails. Runs on pushes to `main`, pull requests and by hand
+- [x] Fixed a bug the tests found: at 320px the "Next page" card's title ("EXPERIENCE" on About) ran 21px past the screen. Below 360px it now sizes at `11cqw`. Page header titles also switch to `12cqw` below 360px, so a long project name like "BLOCKCHAIN" fits
+- [x] Verify:
+  - [x] Lint clean, `next build` passes (23 static pages and images), `tsc --noEmit` clean
+  - [x] All 70 browser tests pass locally
+  - [x] Screenshots checked: `/projects` at 1440 and 390px, a project page at 1440 and 390px, the next-project card, the About next-page card at 320px, and all three preview images
+  - [ ] First GitHub Actions run on `main`: see below
+- [x] Update CLAUDE.md, README and STATUS.md, commit, push to `main`
 
 ## Done: add the chess engine to Projects, and write CLAUDE.md (on `main`)
 
@@ -116,6 +142,9 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - Case studies on `/projects` are listed newest first.
 - A case study's "Rules the code enforces" lists only rules the project's build or tests actually check.
 - `PageLink` accepts `/page#id` links: the page wipe runs as usual, then scrolls to that id instead of the top.
+- Each project has its own page at `/projects/<slug>`; `/projects` is the list. Old `/projects#slug` links still work.
+- Browser tests serve a placeholder for third-party images, so they test this site's code rather than someone else's CDN.
+- CI runs after each push to `main` rather than gating it, since work goes straight to `main`.
 - Work is committed and pushed straight to `main`, with no feature branches or pull requests (written into `CLAUDE.md`).
 - A project's display name is a readable title, not its repo or hosting slug ("Chess Engine", not "foai-chess-engine").
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.

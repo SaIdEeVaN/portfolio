@@ -4,7 +4,7 @@ import ScrollReveal from "./components/ScrollReveal";
 import { PageLink } from "./components/PageTransition";
 import { SkillsMarquee } from "./components/SkillsLogoGrid";
 import { PAGES } from "./lib/pages";
-import { PROJECTS } from "./lib/projects";
+import { PROJECTS, projectHref } from "./lib/projects";
 
 const HERO_INTRO =
   "I'm passionate about DevOps and cybersecurity. Most days you'll find me in the Linux CLI (especially Debian) — building, breaking, and improving systems until they're reliable and secure.";
@@ -97,7 +97,7 @@ export default function Home() {
           <SectionHead path="projects" title="Projects" lede="What I've been building lately." />
 
           <ScrollReveal>
-            <PageLink href="/projects" className="feature">
+            <PageLink href={projectHref(featured)} wipeLabel={featured.name} className="feature">
               <span className="feature__top">
                 <span className="feature__year">{featured.year}</span>
                 <span className="tags">

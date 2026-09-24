@@ -12,6 +12,11 @@ const LINKS: PageHref[] = ["/about", "/experience", "/projects", "/education", "
 
 const EASE_OUT = [0.2, 0.8, 0.2, 1] as const;
 
+// A nav link also stands for the pages below it: /projects covers /projects/chess-engine.
+function inSection(pathname: string, href: string) {
+  return pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+}
+
 const PANEL_VARIANTS: Variants = {
   closed: {
     clipPath: "inset(0 0 100% 0)",
@@ -49,7 +54,8 @@ export default function Navbar() {
     setIsOpen(false);
     setPending({ href, from: pathname });
   };
-  const current = (href: string) => (pathname === href ? "page" : undefined);
+  const current = (href: string) =>
+    pathname === href ? "page" : inSection(pathname, href) ? "true" : undefined;
 
   return (
     <nav className="nav" aria-label="Primary">
@@ -75,7 +81,7 @@ export default function Navbar() {
                 aria-current={current(href)}
                 onNavigate={() => startNavigation(href)}
               >
-                {markerHref === href ? (
+                {inSection(markerHref, href) ? (
                   <motion.span
                     layoutId="nav-marker"
                     className="nav__marker"

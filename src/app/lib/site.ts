@@ -28,14 +28,17 @@ export const SOCIAL_IMAGE = {
 };
 
 // Per-page metadata. openGraph/twitter are replaced (not merged) per segment, so repeat the shared fields.
+// A page with its own opengraph-image and twitter-image routes (a project) passes its path as imagePath.
 export function pageMetadata({
   title,
   description,
   path,
+  imagePath = "",
 }: {
   title: string;
   description: string;
   path: string;
+  imagePath?: string;
 }): Metadata {
   const fullTitle = `${title} | ${SITE_NAME}`;
 
@@ -50,13 +53,19 @@ export function pageMetadata({
       title: fullTitle,
       description,
       siteName: SITE_NAME,
-      images: [SOCIAL_IMAGE],
+      images: [
+        {
+          ...SOCIAL_IMAGE,
+          url: `${imagePath}/opengraph-image`,
+          alt: imagePath ? fullTitle : SOCIAL_IMAGE.alt,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: ["/twitter-image"],
+      images: [`${imagePath}/twitter-image`],
     },
   };
 }

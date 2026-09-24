@@ -18,7 +18,7 @@ const EXPERIENCE_ITEMS: TimelineItem[] = [
     subtitle: "Blockchain Innovation Club, Rajalakshmi Engineering College",
     start: "Jul 2026",
     end: "Present",
-    link: { href: "/projects#bic-rec", label: "See the club website I built" },
+    link: { href: "/projects/bic-rec", label: "See the club website I built" },
   },
   {
     title: "Tech Team Member",
