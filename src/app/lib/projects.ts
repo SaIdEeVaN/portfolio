@@ -29,20 +29,20 @@ export const PROJECTS: Project[] = [
     summary:
       "Play chess in the browser against a search engine written from scratch, then watch what each search technique saves.",
     description:
-      "Built for the Foundations of Artificial Intelligence course. The opponent is a classical engine — minimax with alpha-beta pruning, iterative deepening, quiescence search, MVV-LVA move ordering and a Zobrist-hashed transposition table — running in a Web Worker so the board never freezes. Teaching mode searches the position on the board three ways at a fixed depth: from the opening, alpha-beta cuts plain minimax's 5,072,213 nodes to 113,360.",
+      "Built for the Foundations of Artificial Intelligence course. The opponent is a classical engine — minimax with alpha-beta pruning, iterative deepening, quiescence search, null-move pruning, MVV-LVA move ordering and a fixed-size, Zobrist-hashed transposition table — running in a Web Worker so the board never freezes. Games can run on a clock, from 1-minute bullet to 15+10 rapid, with premoves and moves typed in SAN. Over 128 games against Stockfish 19 at four calibrated strengths, it rated about 1600–1700 at one second a move. Teaching mode searches a position three ways at a fixed depth: from the opening, alpha-beta cuts plain minimax's 5,072,213 nodes to 113,360.",
     tags: ["JavaScript", "React", "Vite", "Web Workers", "GitHub Actions", "Firebase Hosting"],
     repoUrl: "https://github.com/SaIdEeVaN/FOAI-Project",
     liveUrl: "https://foai-chess-engine.web.app",
     facts: [
       { label: "Year", value: "2026" },
       { label: "Role", value: "Sole developer" },
-      { label: "Engine", value: "Minimax with alpha-beta, in a Web Worker" },
-      { label: "Frontend", value: "React 19, Vite 8, plain CSS" },
+      { label: "Engine", value: "Alpha-beta with null-move pruning, in a Web Worker" },
+      { label: "Strength", value: "About 1600–1700 on Stockfish 19's UCI_Elo scale" },
     ],
     // GitHub's language breakdown for the repo (bytes); it only has three.
     languages: [
-      { name: "JavaScript", bytes: 92_035 },
-      { name: "CSS", bytes: 23_350 },
+      { name: "JavaScript", bytes: 206_207 },
+      { name: "CSS", bytes: 27_853 },
       { name: "HTML", bytes: 742 },
     ],
     languagesSource: "All three languages by bytes of code, from GitHub, September 2026.",
@@ -51,7 +51,7 @@ export const PROJECTS: Project[] = [
     pipeline: [
       {
         title: "Move generation",
-        text: "Legal moves for every piece, including castling, en passant and promotion, checked against perft counts.",
+        text: "Legal moves for every piece, including castling, en passant and promotion, matching the published perft counts on seven standard positions.",
         tool: "Custom board + move generator",
       },
       {
@@ -61,17 +61,17 @@ export const PROJECTS: Project[] = [
       },
       {
         title: "Search",
-        text: "Minimax with alpha-beta goes one ply deeper at a time, and follows captures past the last ply so it doesn't stop mid-exchange.",
-        tool: "Iterative deepening + quiescence",
+        text: "Alpha-beta goes one ply deeper at a time and follows captures past the last ply. Letting the side to move pass cuts lines that can't matter, worth about 130 Elo in self-play.",
+        tool: "Iterative deepening + quiescence + null-move",
       },
       {
         title: "Ordering and caching",
-        text: "The stored best move is tried first, then captures by most valuable victim, and a position reached again reuses its stored result.",
-        tool: "MVV-LVA + Zobrist transposition table",
+        text: "The stored best move is tried first, then captures by most valuable victim. Results live in a 10 MB table that never grows and is kept for the whole game.",
+        tool: "MVV-LVA + fixed-size Zobrist table",
       },
       {
         title: "Teaching mode",
-        text: "The position on the board is searched three ways at depth 5, comparing nodes, time and the move each one picks.",
+        text: "The board, or any FEN you paste, is searched three ways at depth 5, comparing nodes, time and the move each picks. A search past 60 seconds stops.",
         tool: "Fixed-depth search with switchable techniques",
       },
     ],
@@ -82,11 +82,11 @@ export const PROJECTS: Project[] = [
       },
       {
         title: "A move is always ready",
-        text: "The engine has 2 seconds a move, checked every 2,048 nodes; a depth cut short is thrown away and the last finished one plays.",
+        text: "Each move gets a budget, 2 seconds or a slice of the engine's clock, checked every 2,048 nodes; a depth cut short is thrown away and the last finished one plays.",
       },
       {
-        title: "Teaching searches can't hang",
-        text: "A comparison that passes 60 seconds stops and reports its node count as a lower bound instead of freezing the screen.",
+        title: "A failing test stops a deploy",
+        text: "GitHub Actions runs 53 tests, perft counts included, before every build, and deploys to Firebase only if they all pass.",
       },
     ],
   },

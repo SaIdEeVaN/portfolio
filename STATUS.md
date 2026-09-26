@@ -1,17 +1,34 @@
 # Status
 
-Last updated: 2026-09-24
+Last updated: 2026-09-26
 
 ## Where things stand
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page.
+- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Sep 25 (null-move pruning, clocks, 53 tests, rated about 1600–1700 against Stockfish).
 - GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
 - Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: bring the Chess Engine page up to date with the engine (on `main`)
+
+The chess engine repo changed a lot on Sep 25, after its case study here was written: null-move pruning, a fixed-size transposition table, contempt, chess clocks, premoves, SAN and FEN, a 53-test suite that gates the deploy, and a benchmark against Stockfish (`REPORT.md`). The page still described the Sep 24 engine.
+
+- [x] Read the repo's README, `REPORT.md`, `package.json`, deploy workflow and the engine code for every claim. Ran its `npm test`: 53 tests pass.
+- [x] Description: adds null-move pruning and the fixed-size table, clocks from 1-minute bullet to 15+10 rapid, premoves, typed SAN moves, and the rating (about 1600–1700 at one second a move, from 128 games against Stockfish 19 at four calibrated strengths). The teaching-mode numbers are unchanged and still match the README.
+- [x] Facts: Engine is now "Alpha-beta with null-move pruning, in a Web Worker". Frontend became Strength, "About 1600–1700 on Stockfish 19's UCI_Elo scale"; React and Vite are still in the tags.
+- [x] Languages from GitHub's API (the repo was attached this time): JavaScript 206,207, CSS 27,853, HTML 742 bytes, up from 92,035 / 23,350 / 742 with the tests and benchmark scripts.
+- [x] How it works: perft now names its seven standard positions; Search adds null-move pruning (about +130 Elo in self-play); Ordering and caching names the 10 MB table that never grows and lasts the whole game; Teaching mode takes any FEN and mentions the 60-second stop.
+- [x] Rules: "A move is always ready" now covers timed games (2 seconds, or a slice of the engine's clock: remaining/30 + 0.8 × increment, between 50 ms and 2 s, still checked every 2,048 nodes). "Teaching searches can't hang" gave way to "A failing test stops a deploy", since CI runs the 53 tests before building and deploying. The 60-second stop moved into the Teaching mode step.
+- [x] Summary, name, slug, tags and the copy naming the projects didn't need to change.
+- [x] Verify:
+  - [x] Lint clean, `next build` passes (23 static pages and images), `tsc --noEmit` clean
+  - [x] All 70 browser tests pass (with `PLAYWRIGHT_CHROMIUM_PATH`, since this machine's Chromium doesn't match Playwright 1.63)
+  - [x] `/projects/chess-engine` checked in Chromium at 1440, 390 and 320px: nothing past the edge, no fact value overflows, the ring reads 235K bytes of code
+- [x] Update STATUS.md, commit, push to `main`
 
 ## Done: serve the skill and contact icons from the site (on `main`)
 
@@ -168,3 +185,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - Work is committed and pushed straight to `main`, with no feature branches or pull requests (written into `CLAUDE.md`).
 - A project's display name is a readable title, not its repo or hosting slug ("Chess Engine", not "foai-chess-engine").
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.
+- A case study follows its project's repo. When the project changes, the case study is updated from the repo (its README, report and code), not from memory.
