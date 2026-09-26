@@ -1,5 +1,6 @@
 import type { Project } from "../lib/projects";
 import LanguageRing from "./LanguageRing";
+import RepoLines from "./RepoLines";
 import ScrollReveal from "./ScrollReveal";
 
 const STEP_ACCENTS = ["a1", "a3", "a4", "a2"] as const;
@@ -41,6 +42,18 @@ export default function ProjectCaseStudy({ project }: { project: Project }) {
         </ScrollReveal>
         <LanguageRing languages={project.languages} source={project.languagesSource} />
       </section>
+
+      {project.repo ? (
+        <section aria-labelledby="repo">
+          <ScrollReveal>
+            <h2 id="repo" className="project__subhead">
+              What&apos;s in the repo
+            </h2>
+            <p className="project__note">{project.repo.note}</p>
+          </ScrollReveal>
+          <RepoLines parts={project.repo.parts} source={project.repo.source} />
+        </section>
+      ) : null}
 
       <section aria-labelledby="pipeline">
         <ScrollReveal>

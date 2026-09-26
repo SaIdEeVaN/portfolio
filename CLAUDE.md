@@ -72,6 +72,9 @@ whether it looks right.
    - `pipeline`: exactly five steps (the grid has five columns).
    - `rules`: exactly three (the grid has three columns), and only rules the project's code,
      build or tests actually enforce.
+   - `repo` (optional): every line in the repo by part, shown as "What's in the repo". Count
+     with `wc -l` over the files git tracks at a named commit, say what's left out in `source`,
+     and label data (benchmark results, fixtures) as data rather than code.
    - `slug` becomes the page's URL, `/projects/<slug>`. The page, its preview image, the card on
      `/projects`, the next-project links and the sitemap entry all follow from the entry.
 3. Update the copy that names the projects: the Projects `blurb` in `src/app/lib/pages.ts` and

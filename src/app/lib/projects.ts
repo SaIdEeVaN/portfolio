@@ -3,6 +3,12 @@ export type ProjectLanguage = {
   bytes: number;
 };
 
+export type RepoPart = {
+  name: string;
+  text: string;
+  lines: number;
+};
+
 export type Project = {
   slug: string;
   name: string;
@@ -15,6 +21,8 @@ export type Project = {
   facts: { label: string; value: string }[];
   languages: ProjectLanguage[];
   languagesSource: string;
+  // Optional: every line in the repo, by part, including the data GitHub's languages leave out.
+  repo?: { note: string; source: string; parts: RepoPart[] };
   pipelineNote: string;
   pipeline: { title: string; text: string; tool: string }[];
   rules: { title: string; text: string }[];
@@ -45,7 +53,34 @@ export const PROJECTS: Project[] = [
       { name: "CSS", bytes: 27_853 },
       { name: "HTML", bytes: 742 },
     ],
-    languagesSource: "All three languages by bytes of code, from GitHub, September 2026.",
+    languagesSource:
+      "All three languages by bytes of code, from GitHub, September 2026. GitHub leaves data files out, so the benchmark results below aren't in it.",
+    // wc -l over the files git tracks at 73d165d, largest part first.
+    repo: {
+      note: "91,970 of these lines were added on 25 September 2026, in the final iteration. Most of them are the raw benchmark results; the code is 5,881 lines.",
+      source:
+        "Lines in every file git tracks, counted with wc -l at commit 73d165d. Leaves out package-lock.json and 183 lines of config.",
+      parts: [
+        {
+          name: "Benchmark results",
+          text: "Every game and search behind the report, as JSON and PGN, plus the 105-position tactical suite",
+          lines: 88_413,
+        },
+        { name: "Interface", text: "React components, styles and game logic", lines: 2_949 },
+        {
+          name: "Engine",
+          text: "Board, move generation, evaluation, search, SAN and FEN",
+          lines: 1_461,
+        },
+        { name: "Docs", text: "README, final report, PRD and status", lines: 1_328 },
+        {
+          name: "Benchmark scripts",
+          text: "Stockfish matches, experiments and the report's tables",
+          lines: 860,
+        },
+        { name: "Tests", text: "53 tests, perft counts included", lines: 611 },
+      ],
+    },
     pipelineNote:
       "The whole engine runs in the browser, with no server, so nothing about a game leaves the page.",
     pipeline: [
