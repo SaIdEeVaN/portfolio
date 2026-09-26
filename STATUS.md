@@ -6,14 +6,24 @@ Last updated: 2026-09-26
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Sep 25 (null-move pruning, clocks, 53 tests, rated about 1600–1700 against Stockfish) and shows the repo's full size: 95,622 lines, 88,413 of them benchmark results.
+- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Sep 25 (null-move pruning, clocks, 53 tests, rated about 1600–1700 against Stockfish).
 - GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
 - Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
 
-## Done: show the chess engine's full size, not only its code (on `main`)
+## Done: remove the lines-of-code section again (on `main`)
+
+Sai didn't want a section that only one project had, so "What's in the repo" is gone.
+
+- [x] Remove the `repo` field, the `RepoLines` component and its styles, and the CLAUDE.md note about the field
+- [x] The "Code by language" note goes back to "All three languages by bytes of code, from GitHub, September 2026." (it pointed at the removed section)
+- [x] Everything from the earlier Chess Engine update stays: description, facts, languages, pipeline and rules
+- [x] Verify: lint, build, type check and all 70 browser tests pass
+- [x] Update STATUS.md, commit, push to `main`
+
+## Done, then removed: show the chess engine's full size, not only its code (`1255b1e`)
 
 Sai pointed out that the page didn't reflect the lines added to the chess engine. It only showed GitHub's language bytes (235K), and GitHub leaves data files out of those, so the Sep 25 iteration's size didn't show at all.
 
@@ -201,4 +211,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - A project's display name is a readable title, not its repo or hosting slug ("Chess Engine", not "foai-chess-engine").
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.
 - A case study follows its project's repo. When the project changes, the case study is updated from the repo (its README, report and code), not from memory.
-- A project page can show every line in its repo (`repo` in `projects.ts`), but data is labeled as data. The chess engine's 88,413 lines of benchmark results are never counted as code.
+- Every project page has the same sections. Nothing that only one project has (a lines-of-code breakdown was tried for the chess engine and removed).
