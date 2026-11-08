@@ -29,23 +29,23 @@ export const PROJECTS: Project[] = [
     summary:
       "Play chess in the browser against a search engine written from scratch, then watch what each search technique saves.",
     description:
-      "Built for the Foundations of Artificial Intelligence course. The opponent is a classical engine — minimax with alpha-beta pruning, iterative deepening, quiescence search, null-move pruning, MVV-LVA move ordering and a fixed-size, Zobrist-hashed transposition table — running in a Web Worker so the board never freezes. Games can run on a clock, from 1-minute bullet to 15+10 rapid, with premoves and moves typed in SAN. Over 128 games against Stockfish 19 at four calibrated strengths, it rated about 1600–1700 at one second a move. Teaching mode searches a position three ways at a fixed depth: from the opening, alpha-beta cuts plain minimax's 5,072,213 nodes to 113,360.",
+      "Built for the Foundations of Artificial Intelligence course. The opponent is a classical engine — minimax with alpha-beta pruning, iterative deepening, quiescence search, null-move pruning, move ordering with killer moves and the history heuristic, and a fixed-size, Zobrist-hashed transposition table — running in a Web Worker so the board never freezes. 44 of its evaluation weights were learned from its own games: Texel tuning fitted them by logistic regression on 257,691 positions from 3,941 self-play games. Games can run on a clock, from 1-minute bullet to 15+10 rapid, with premoves and moves typed in SAN. Over 128 games against Stockfish 19 at four calibrated strengths, it rated about 1900–2000 at one second a move, about 200 points above the September version. Teaching mode searches a position three ways at a fixed depth: from the opening, alpha-beta cuts plain minimax's 5,072,213 nodes to 131,362.",
     tags: ["JavaScript", "React", "Vite", "Web Workers", "GitHub Actions", "Firebase Hosting"],
     repoUrl: "https://github.com/SaIdEeVaN/FOAI-Project",
     liveUrl: "https://foai-chess-engine.web.app",
     facts: [
       { label: "Year", value: "2026" },
       { label: "Role", value: "Sole developer" },
-      { label: "Engine", value: "Alpha-beta with null-move pruning, in a Web Worker" },
-      { label: "Strength", value: "About 1600–1700 on Stockfish 19's UCI_Elo scale" },
+      { label: "Engine", value: "Alpha-beta search, Texel-tuned evaluation, in a Web Worker" },
+      { label: "Strength", value: "About 1900–2000 on Stockfish 19's UCI_Elo scale" },
     ],
     // GitHub's language breakdown for the repo (bytes); it only has three.
     languages: [
-      { name: "JavaScript", bytes: 206_207 },
+      { name: "JavaScript", bytes: 265_038 },
       { name: "CSS", bytes: 27_853 },
       { name: "HTML", bytes: 742 },
     ],
-    languagesSource: "All three languages by bytes of code, from GitHub, September 2026.",
+    languagesSource: "All three languages by bytes of code, from GitHub, November 2026.",
     pipelineNote:
       "The whole engine runs in the browser, with no server, so nothing about a game leaves the page.",
     pipeline: [
@@ -56,8 +56,8 @@ export const PROJECTS: Project[] = [
       },
       {
         title: "Evaluation",
-        text: "Each position is scored in centipawns from five terms: material, piece-square tables, pawn structure, king safety and mobility.",
-        tool: "Hand-written evaluation",
+        text: "Material, piece-square tables, pawn structure and passed pawns, king safety, mobility, rook files and the bishop pair, blended from middlegame to endgame. 44 weights were learned from self-play.",
+        tool: "Tapered evaluation + Texel tuning",
       },
       {
         title: "Search",
@@ -66,12 +66,12 @@ export const PROJECTS: Project[] = [
       },
       {
         title: "Ordering and caching",
-        text: "The stored best move is tried first, then captures by most valuable victim. Results live in a 10 MB table that never grows and is kept for the whole game.",
-        tool: "MVV-LVA + fixed-size Zobrist table",
+        text: "The stored best move goes first, then captures by most valuable victim, then quiet moves that cut off before: 42% fewer nodes to depth 7. Results live in a 10 MB table.",
+        tool: "MVV-LVA + killers + history + Zobrist table",
       },
       {
         title: "Teaching mode",
-        text: "The board, or any FEN you paste, is searched three ways at depth 5, comparing nodes, time and the move each picks. A search past 60 seconds stops.",
+        text: "The board, or any FEN you paste, is searched three ways at depth 5 to compare nodes and time, beside a term-by-term breakdown of the evaluation. Searches stop at 60 seconds.",
         tool: "Fixed-depth search with switchable techniques",
       },
     ],
@@ -82,11 +82,11 @@ export const PROJECTS: Project[] = [
       },
       {
         title: "A move is always ready",
-        text: "Each move gets a budget, 2 seconds or a slice of the engine's clock, checked every 2,048 nodes; a depth cut short is thrown away and the last finished one plays.",
+        text: "Each move gets a budget, 2 seconds or a slice of the engine's clock, checked every 2,048 nodes. Depth 1 always finishes; a deeper search cut short is thrown away.",
       },
       {
         title: "A failing test stops a deploy",
-        text: "GitHub Actions runs 53 tests, perft counts included, before every build, and deploys to Firebase only if they all pass.",
+        text: "GitHub Actions runs 62 tests, perft counts included, before every build, and deploys to Firebase only if they all pass.",
       },
     ],
   },
@@ -165,8 +165,8 @@ export const PROJECTS: Project[] = [
     summary:
       "Voice-first skill discovery and scheme matching for Scheduled Caste beneficiaries under the PM-AJAY skilling ecosystem.",
     description:
-      "Someone describes the work they have done, out loud, in Tamil, Hindi, English or a mix of them. VoicePath extracts the skills, normalizes them against a standard taxonomy, matches them to real district-level openings and training, and explains every match in plain language — using only what the person actually said.",
-    tags: ["Python", "FastAPI", "Next.js", "TypeScript", "faster-whisper", "Piper", "Supabase"],
+      "Someone describes the work they have done, out loud, in Tamil, Hindi, English or a mix of them. VoicePath extracts the skills, normalizes them against a standard taxonomy, matches them to real district-level openings and training, and explains every match in plain language — using only what the person actually said. A map shows the openings and the places that can help — training centres, employment offices, banks — from OpenStreetMap, around a town in every Tamil Nadu district. People can ask about a scheme and get an answer that cites its official documents, and anyone who says they are in danger gets the emergency numbers first, before any model is asked.",
+    tags: ["Python", "FastAPI", "Next.js", "TypeScript", "faster-whisper", "Piper", "Supabase", "MapLibre"],
     repoUrl: "https://github.com/SaIdEeVaN/voicepath",
     liveUrl: "https://voicepath.vercel.app",
     facts: [
@@ -175,17 +175,20 @@ export const PROJECTS: Project[] = [
       { label: "Backend", value: "FastAPI, with an optional Supabase database" },
       { label: "Frontend", value: "Next.js App Router, TypeScript, Tailwind v4" },
     ],
-    // GitHub's language breakdown for the repo (bytes), top five languages.
+    // Top five languages (bytes) at 5ef4cb9, counted from the repo the way GitHub does. That
+    // count matched GitHub's own numbers exactly in September. PLpgSQL is the db/ files GitHub
+    // counted then, all unchanged; the new SQL files are plain SQL, which GitHub leaves out.
     languages: [
-      { name: "Python", bytes: 506_815 },
-      { name: "TypeScript", bytes: 255_592 },
+      { name: "Python", bytes: 873_514 },
+      { name: "TypeScript", bytes: 379_625 },
+      { name: "CSS", bytes: 22_402 },
       { name: "PLpgSQL", bytes: 17_606 },
-      { name: "CSS", bytes: 11_220 },
       { name: "Dockerfile", bytes: 1_723 },
     ],
-    languagesSource: "Top five languages by bytes of code, from GitHub, September 2026.",
+    languagesSource:
+      "Top five languages by bytes of code, counted from the repo the way GitHub counts them, November 2026.",
     pipelineNote:
-      "Every component except the LLM runs on the machine, and raw audio isn't kept unless the person opts in.",
+      "Every component except the LLM runs on the machine, and recordings are never kept: speech is transcribed in memory and the audio is discarded.",
     pipeline: [
       {
         title: "Speech to text",

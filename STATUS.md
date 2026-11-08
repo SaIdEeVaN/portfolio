@@ -1,17 +1,43 @@
 # Status
 
-Last updated: 2026-09-26
+Last updated: 2026-11-08
 
 ## Where things stand
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Sep 25 (null-move pruning, clocks, 53 tests, rated about 1600–1700 against Stockfish).
+- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Nov 7 (killer moves and history, a Texel-tuned tapered evaluation, 62 tests, rated about 1900–2000 against Stockfish). VoicePath's page matches its repo as of Nov 5 (the map, scheme Q&A, emergency numbers, recordings never kept).
 - GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
 - Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: bring the Chess Engine and VoicePath pages up to date (on `main`)
+
+Sai changed both repos again: the chess engine on Nov 7 (`b61951e`), VoicePath through Nov 5 (`5ef4cb9`, 37 commits since the page was written on Sep 12).
+
+Chess Engine, from its README, `REPORT.md` (new §6–9) and code:
+
+- [x] Description: adds killer moves and the history heuristic, and Texel tuning (44 evaluation weights fitted by logistic regression on 257,691 positions from 3,941 self-play games; the piece-square tables are still hand-set). Rating now about 1900–2000 on Stockfish 19's scale at 1 s a move, about 200 above September. Teaching mode's alpha-beta count from the opening is now 131,362 (was 113,360: the new evaluation changes the cutoffs).
+- [x] Facts: Engine is "Alpha-beta search, Texel-tuned evaluation, in a Web Worker"; Strength is "About 1900–2000".
+- [x] Languages from GitHub: JavaScript 265,038, CSS 27,853, HTML 742.
+- [x] How it works: Evaluation is now the tapered evaluation with its terms and the 44 learned weights; Ordering adds killers and history (42% fewer nodes to depth 7); Teaching mode mentions the evaluation breakdown beside the search.
+- [x] Rules: "A move is always ready" says depth 1 always finishes (the report's §9.4 bug fix, checked in `search.js`); the deploy gate now runs 62 tests (ran `npm test`: 62 pass).
+
+VoicePath, from its README, STATUS, SECURITY, `db/` and code:
+
+- [x] Description adds the "Near you" map (openings, plus training centres, employment offices and banks from OpenStreetMap, around a town in every Tamil Nadu district), scheme Q&A that cites official documents, and emergency numbers for anyone in danger, checked before any model.
+- [x] How-it-works note: recordings are never kept now (`db/012_no_voice_clips.sql`, commit `1111c49` removed the opt-in toggle). The page used to say audio was kept if the person opted in.
+- [x] Tags add MapLibre. Facts, pipeline and the three rules still match the README and were left alone.
+- [x] Languages: GitHub's API wasn't reachable (attaching the repo to this session was refused), so they were counted from the repo the way GitHub does, and `languagesSource` says so. The count was checked first: at the September commit it gave exactly GitHub's September numbers for Python, TypeScript, CSS and Dockerfile. PLpgSQL stays 17,606, because the `db/` files GitHub counted then are unchanged and the new ones (010–013) are plain SQL, which GitHub leaves out. Now: Python 873,514, TypeScript 379,625, CSS 22,402, PLpgSQL 17,606, Dockerfile 1,723.
+- [ ] Not done: running VoicePath's own test suite here (the permission check refused it). The 894 figure was not put on the page.
+
+- [x] Verify:
+  - [x] Lint clean, `next build` passes, `tsc --noEmit` clean
+  - [x] All 70 browser tests pass. The server logs `NoFallbackError` during the run; that is the deliberate 404 for `/projects/not-a-project`, not a failure
+  - [x] Both pages checked in Chromium at 1440 and 320px: nothing past the edge, rings at 294K and 1M bytes
+- [x] Update STATUS.md, commit, push to `main`
 
 ## Done: remove the lines-of-code section again (on `main`)
 
@@ -212,3 +238,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.
 - A case study follows its project's repo. When the project changes, the case study is updated from the repo (its README, report and code), not from memory.
 - Every project page has the same sections. Nothing that only one project has (a lines-of-code breakdown was tried for the chess engine and removed).
+- When GitHub's language API can't be reached, languages are counted from the repo by extension the way GitHub does, after checking that count against an earlier GitHub figure. SQL files only count as PLpgSQL where GitHub counted them; plain SQL is data and left out.
