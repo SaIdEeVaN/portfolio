@@ -12,6 +12,8 @@ export type Project = {
   tags: string[];
   repoUrl: string;
   liveUrl?: string;
+  // A package published on PyPI, shown as a "View on PyPI" button.
+  pypiUrl?: string;
   facts: { label: string; value: string }[];
   languages: ProjectLanguage[];
   languagesSource: string;
@@ -22,6 +24,78 @@ export type Project = {
 
 // Details are taken from each project's README, linked in repoUrl.
 export const PROJECTS: Project[] = [
+  {
+    slug: "secretsentinel",
+    name: "SecretSentinel",
+    year: "2026",
+    summary:
+      "A secret scanner for application and Web3 code. It checks files and Git history, and fails the build when a key leaks. On PyPI as secretsentinel-scanner.",
+    description:
+      "Built on Gitleaks, with 18 rules of its own for Web3 — EVM and Solana signing keys, mnemonics, keystores and RPC URLs with keys in them — and 2 for gaps in Gitleaks' defaults. It runs from the command line, as a pre-commit hook on staged changes, and as a GitHub Action that reports findings as annotations. A dashboard keeps scan history, triage, suppressions that need a reason, a reviewer and an expiry date, and an audit trail, with JSON, CSV and SARIF exports. A daily GitHub Actions job scans a list of repositories and sends only sanitized reports to a hosted copy on Render with a Neon Postgres database. Version 1.0.0 is on PyPI: pip install secretsentinel-scanner.",
+    tags: ["Python", "Gitleaks", "FastAPI", "React", "GitHub Actions", "PyPI", "Postgres"],
+    repoUrl: "https://github.com/SaIdEeVaN/secretsentinel",
+    pypiUrl: "https://pypi.org/project/secretsentinel-scanner/",
+    facts: [
+      { label: "Year", value: "2026" },
+      { label: "Package", value: "secretsentinel-scanner 1.0.0 on PyPI, Python 3.11+" },
+      { label: "Scanner", value: "Gitleaks 8.30.1 plus 20 rules of its own" },
+      { label: "Dashboard", value: "FastAPI and React, run locally or self-hosted" },
+    ],
+    // Top five languages (bytes) at cfee50a, counted from the repo the way GitHub does; its
+    // API wasn't reachable. Solidity (4,497) is sixth.
+    languages: [
+      { name: "Python", bytes: 413_664 },
+      { name: "JavaScript", bytes: 194_597 },
+      { name: "Shell", bytes: 9_371 },
+      { name: "PowerShell", bytes: 8_966 },
+      { name: "CSS", bytes: 6_178 },
+    ],
+    languagesSource:
+      "Top five languages by bytes of code, counted from the repo the way GitHub counts them, November 2026.",
+    pipelineNote:
+      "It never uses a credential it finds, contacts a wallet or runs code from the repository it scans.",
+    pipeline: [
+      {
+        title: "Scan",
+        text: "Gitleaks reads the current files, the Git history, or both, with its default rules and SecretSentinel's own.",
+        tool: "Gitleaks 8.30.1, checksum-verified",
+      },
+      {
+        title: "Web3 rules",
+        text: "18 rules for EVM and Solana signing keys, mnemonics, keystores and keyed RPC URLs, and 2 for gaps in the defaults.",
+        tool: "web3_rules.toml",
+      },
+      {
+        title: "Redact",
+        text: "Overlapping matches are merged and each finding gets a severity. The value is dropped; a report keeps the file, line, commit and rule.",
+        tool: "Classifier + sanitizer",
+      },
+      {
+        title: "Policy",
+        text: "A severity threshold, path exclusions and reviewed suppressions with an expiry date decide what blocks.",
+        tool: ".secretsentinel.yml",
+      },
+      {
+        title: "Report",
+        text: "A blocking finding fails the CI check or refuses the commit. The dashboard shows history, triage and an audit trail.",
+        tool: "CLI, pre-commit hook, GitHub Action, dashboard",
+      },
+    ],
+    rules: [
+      {
+        title: "No secret in any output",
+        text: "Every test fixture is a canary. After real scans, none may appear in CLI output, exports, GitHub annotations, API responses, the database or logs.",
+      },
+      {
+        title: "It fails closed",
+        text: "Exit 1 for a blocking finding, 2 for bad input or policy, 3 if the scan can't run. Every nonzero exit fails the check, and the hook refuses the commit.",
+      },
+      {
+        title: "A release is checked before PyPI sees it",
+        text: "The release job installs the built wheel in a clean environment, checks its ruleset matches the repo's, and must block the demo before it publishes.",
+      },
+    ],
+  },
   {
     slug: "chess-engine",
     name: "Chess Engine",

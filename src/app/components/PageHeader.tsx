@@ -5,7 +5,7 @@ type PageHeaderProps = {
   page: SitePage;
   lede: string;
   // A page below a top-level one (a project) keeps its parent's colors but shows its own title and path.
-  title?: string;
+  title?: React.ReactNode;
   path?: React.ReactNode;
   children?: React.ReactNode;
 };

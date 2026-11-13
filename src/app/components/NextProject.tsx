@@ -1,5 +1,6 @@
 import { getNextProject, projectAccent, projectHref, type Project } from "../lib/projects";
 import { PageLink } from "./PageTransition";
+import ProjectName from "./ProjectName";
 
 export default function NextProject({ current }: { current: Project }) {
   const next = getNextProject(current);
@@ -14,7 +15,9 @@ export default function NextProject({ current }: { current: Project }) {
           data-accent={projectAccent(next)}
         >
           <span className="next-page__meta">Next project</span>
-          <span className="next-page__title">{next.name}</span>
+          <span className="next-page__title">
+            <ProjectName name={next.name} />
+          </span>
           <span className="next-page__blurb">{next.summary}</span>
         </PageLink>
       </div>

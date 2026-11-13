@@ -13,7 +13,7 @@ import { motion, type TargetAndTransition } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface SwooshTextProps {
-  text: string;
+  text: React.ReactNode;
   className?: string;
 }
 

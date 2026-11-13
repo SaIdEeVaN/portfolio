@@ -1,17 +1,40 @@
 # Status
 
-Last updated: 2026-11-08
+Last updated: 2026-11-13
 
 ## Where things stand
 
 - Neo-brutalist redesign is on `main`, following `portfolio_design_spec.md` (Archivo Black / Space Grotesk / JetBrains Mono / Instrument Serif, Clash / Acid / Noir palettes, Restrained / Springy / Chaotic motion).
 - The site is split into separate pages: `/`, `/about`, `/experience`, `/projects`, `/education`, `/skills`, `/contact`, plus a styled 404.
-- Three projects, newest first: Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. Chess Engine is also the featured project on the home page. Its page matches the engine as of Nov 7 (killer moves and history, a Texel-tuned tapered evaluation, 62 tests, rated about 1900–2000 against Stockfish). VoicePath's page matches its repo as of Nov 5 (the map, scheme Q&A, emergency numbers, recordings never kept).
-- GitHub Actions runs lint, the build, the type check and a Playwright suite (70 tests) on every push to `main`.
+- Four projects, newest first: SecretSentinel, Chess Engine, Blockchain Innovation Club, REC (the club website), then VoicePath. `/projects` lists them as cards, and each has its own page at `/projects/<slug>` with its own share preview image. Details come from each project's README and code. SecretSentinel, the newest, is the featured project on the home page. Its page matches the engine as of Nov 7 (killer moves and history, a Texel-tuned tapered evaluation, 62 tests, rated about 1900–2000 against Stockfish). VoicePath's page matches its repo as of Nov 5 (the map, scheme Q&A, emergency numbers, recordings never kept).
+- GitHub Actions runs lint, the build, the type check and a Playwright suite (77 tests) on every push to `main`.
 - Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: add SecretSentinel to Projects (on `main`)
+
+Code at https://github.com/SaIdEeVaN/secretsentinel, package at https://pypi.org/project/secretsentinel-scanner/ (1.0.0, published 2026-11-13).
+
+- [x] Read the repo at `cfee50a`: README, `CHANGELOG.md`, `backend/pyproject.toml`, the workflows (release, secret scan, daily fleet scan), `rules/web3_rules.toml`, the fixture manifest, the CLI, hook and canary tests, `scripts/check_package.sh`, `docs/VALIDATION.md`. PyPI's JSON API for the version, Python requirement and upload date.
+- [x] New `secretsentinel` entry, first in the list (newest first), so it is now the home page's featured project
+  - [x] Name "SecretSentinel", not the package name `secretsentinel-scanner`
+  - [x] Tags: Python, Gitleaks, FastAPI, React, GitHub Actions, PyPI, Postgres
+  - [x] Four facts: Year, Package (secretsentinel-scanner 1.0.0, Python 3.11+), Scanner (Gitleaks 8.30.1 plus 20 rules of its own), Dashboard (FastAPI and React, local or self-hosted). No Role fact: not confirmed with Sai.
+  - [x] Rules counted in `web3_rules.toml`: 21 entries, which are 18 Web3 rules, the 2 gap rules the changelog names, and an allowlist added to Gitleaks' own `generic-api-key`
+  - [x] Languages counted from the repo the way GitHub does (its API wasn't reachable for this repo; none of the large files are bundled or minified): Python 413,664, JavaScript 194,597, Shell 9,371, PowerShell 8,966, CSS 6,178. Solidity (4,497) is sixth.
+  - [x] How it works: scan → Web3 rules → redact → policy → report
+  - [x] Rules, each checked in the code: no secret in any output (canary tests over every output); it fails closed (exit codes 0–3, the hook refuses the commit); a release is checked before PyPI sees it (clean-venv install, ruleset digest, demo must exit 1)
+  - [x] Left out: the detection rate and test counts in `docs/VALIDATION.md`, recorded on Nov 10 before the Nov 13 rule and fixture changes (the manifest now has 29 positives, not 30)
+- [x] New optional `pypiUrl` field: a "View on PyPI" button in the project page header
+- [x] Update the Projects blurb and the `/projects` description
+- [x] "SecretSentinel" is one 14-letter word, and it ran off the screen in four places: the home feature (even at 1440px: 1,384px of text in a 1,122px box), the `/projects` cards, the page header and the next-project card. 16 browser tests failed. New `ProjectName` component puts a `<wbr>` between the parts of a joined-up name, used in those four places, so it breaks as SECRET / SENTINEL only when it must. `SwooshText` and `PageHeader` now take a React node as the title. Page titles, share tags and the preview image keep the plain name.
+- [x] Verify:
+  - [x] Lint clean, `next build` passes (26 static pages and images), `tsc --noEmit` clean
+  - [x] All 77 browser tests pass (70 before, plus the new page at each width)
+  - [x] Checked in Chromium: the new page at 1440 and 320px, the home feature at 1440 and 320px, `/projects` at 390px, the next-project card at 320px, and the share image
+- [x] Update CLAUDE.md and STATUS.md, commit, push to `main`
 
 ## Done: bring the Chess Engine and VoicePath pages up to date (on `main`)
 
@@ -238,4 +261,6 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - The "Code by language" ring sizes to its box (at most 300px) rather than a fixed 300px, so it shrinks on narrow phones. Below 360px, case study titles and legend names also shrink; at 360px and up nothing changes.
 - A case study follows its project's repo. When the project changes, the case study is updated from the repo (its README, report and code), not from memory.
 - Every project page has the same sections. Nothing that only one project has (a lines-of-code breakdown was tried for the chess engine and removed).
-- When GitHub's language API can't be reached, languages are counted from the repo by extension the way GitHub does, after checking that count against an earlier GitHub figure. SQL files only count as PLpgSQL where GitHub counted them; plain SQL is data and left out.
+- When GitHub's language API can't be reached, languages are counted from the repo by extension the way GitHub does, after checking that count against an earlier GitHub figure where there is one (SecretSentinel had none). SQL files only count as PLpgSQL where GitHub counted them; plain SQL is data and left out.
+- A project name in a display title goes through `ProjectName`, which lets a joined-up name break between its words. Plain names everywhere else.
+- A published package gets a "View on PyPI" button (`pypiUrl`), not the "Open live demo" one.

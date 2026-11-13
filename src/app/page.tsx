@@ -2,6 +2,7 @@ import DynamicText, { type Greeting } from "@/components/kokonutui/dynamic-text"
 import Scramble from "./components/Scramble";
 import ScrollReveal from "./components/ScrollReveal";
 import { PageLink } from "./components/PageTransition";
+import ProjectName from "./components/ProjectName";
 import { SkillsMarquee } from "./components/SkillsLogoGrid";
 import { PAGES } from "./lib/pages";
 import { PROJECTS, projectHref } from "./lib/projects";
@@ -108,7 +109,9 @@ export default function Home() {
                   ))}
                 </span>
               </span>
-              <span className="feature__title">{featured.name}</span>
+              <span className="feature__title">
+                <ProjectName name={featured.name} />
+              </span>
               <span className="feature__summary">{featured.summary}</span>
               <span className="feature__cta">Read the breakdown</span>
             </PageLink>

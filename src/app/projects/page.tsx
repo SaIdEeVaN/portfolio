@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import NextPage from "../components/NextPage";
 import PageHeader from "../components/PageHeader";
 import { PageLink } from "../components/PageTransition";
+import ProjectName from "../components/ProjectName";
 import ScrollReveal from "../components/ScrollReveal";
 import { getPage } from "../lib/pages";
 import { PROJECTS, projectAccent, projectHref } from "../lib/projects";
@@ -10,7 +11,7 @@ import { pageMetadata } from "../lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Projects by Baviri Setty Sai Deevan: a chess engine written from scratch with a teaching mode for its search, the website of the Blockchain Innovation Club at REC, and VoicePath, voice-first skill discovery and scheme matching under the PM-AJAY skilling ecosystem.",
+    "Projects by Baviri Setty Sai Deevan: SecretSentinel, a secret scanner for application and Web3 code published on PyPI, a chess engine written from scratch with a teaching mode for its search, the website of the Blockchain Innovation Club at REC, and VoicePath, voice-first skill discovery and scheme matching under the PM-AJAY skilling ecosystem.",
   path: "/projects",
 });
 
@@ -45,7 +46,9 @@ export default function ProjectsPage() {
                         ))}
                       </span>
                     </span>
-                    <span className="feature__title">{project.name}</span>
+                    <span className="feature__title">
+                      <ProjectName name={project.name} />
+                    </span>
                     <span className="feature__summary">{project.summary}</span>
                     <span className="feature__cta">Read the case study</span>
                   </PageLink>

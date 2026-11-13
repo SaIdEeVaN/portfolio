@@ -4,6 +4,7 @@ import NextProject from "../../components/NextProject";
 import PageHeader from "../../components/PageHeader";
 import { PageLink } from "../../components/PageTransition";
 import ProjectCaseStudy from "../../components/ProjectCaseStudy";
+import ProjectName from "../../components/ProjectName";
 import { getPage } from "../../lib/pages";
 import { getProject, PROJECTS, projectHref } from "../../lib/projects";
 import { pageMetadata } from "../../lib/site";
@@ -37,7 +38,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <>
       <PageHeader
         page={getPage("/projects")}
-        title={project.name}
+        title={<ProjectName name={project.name} />}
         path={
           <>
             <PageLink href="/projects" className="page-header__crumb">
@@ -67,6 +68,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               data-magnetic=""
             >
               Open live demo
+            </a>
+          ) : null}
+          {project.pypiUrl ? (
+            <a
+              className="btn"
+              href={project.pypiUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-magnetic=""
+            >
+              View on PyPI
             </a>
           ) : null}
         </div>

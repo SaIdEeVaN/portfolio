@@ -72,6 +72,8 @@ whether it looks right.
    - `pipeline`: exactly five steps (the grid has five columns).
    - `rules`: exactly three (the grid has three columns), and only rules the project's code,
      build or tests actually enforce.
+   - `liveUrl` (optional) is a live site, shown as "Open live demo"; `pypiUrl` (optional) is a
+     package on PyPI, shown as "View on PyPI".
    - `slug` becomes the page's URL, `/projects/<slug>`. The page, its preview image, the card on
      `/projects`, the next-project links and the sitemap entry all follow from the entry.
 3. Update the copy that names the projects: the Projects `blurb` in `src/app/lib/pages.ts` and
@@ -90,4 +92,8 @@ whether it looks right.
   runs. It accepts `/page#id` links. Links to a project page pass `wipeLabel={project.name}`.
 - Big display titles have a 44px floor, which is too wide for long words below 360px. Those
   titles switch to a `cqw` size under `@media (max-width: 359px)`; do the same for any new one.
+- A project name shown as a display title goes through `ProjectName`
+  (`src/app/components/ProjectName.tsx`), so a joined-up name like "SecretSentinel" can break
+  between its words instead of running off the screen. Page titles and share images use the
+  plain name.
 - Copy is plain and specific: short sentences, real numbers, no marketing language.
