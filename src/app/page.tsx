@@ -19,7 +19,7 @@ const GREETINGS: Greeting[] = [
 
 const SNAPSHOT = [
   { label: "Focus", value: "Systems, DevOps, cybersecurity, and Linux." },
-  { label: "Stack", value: "React / Next.js, Django, Python, C/C++, SQL, Tailwind CSS." },
+  { label: "Stack", value: "Python, FastAPI, React / Next.js, TypeScript, PostgreSQL, Tailwind CSS." },
   { label: "Currently", value: "Learning, building projects, and improving this portfolio." },
 ] as const;
 

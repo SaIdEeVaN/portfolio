@@ -29,7 +29,7 @@ Sai asked for the Skills page to follow the projects. It was one flat grid of 20
 - [x] Copy: the lede and the Skills blurb now read "What I build with, and the projects I used it in."; the metadata description names the groups.
 - [x] Fixed a bug the old tests missed: at 320px, JavaScript, TypeScript, Wireshark and Metasploit already ran 12–17px past their tiles, and the new PowerShell, PostgreSQL and Playwright ran past at 320 and 360px. Below 460px the tile name is now `min(17px, 4vw)`. The browser tests now also fail when a skill's name ends outside its tile; checked that they caught all seven before the fix.
 - [x] Also fixed: VoicePath's Normalization step said `multilingual-e5-base`; since Nov 10 it runs `multilingual-e5-small` as int8 ONNX on its own server. Its "ranking imports no LLM" rule still holds after the Nov 9 matching rework.
-- [ ] Not changed: the home page's "Stack" line ("React / Next.js, Django, Python, C/C++, SQL, Tailwind CSS.") — asked Sai first.
+- [x] The home page's "Stack" line said "React / Next.js, Django, Python, C/C++, SQL, Tailwind CSS."; Django is in none of the projects. Asked Sai first, then changed it to "Python, FastAPI, React / Next.js, TypeScript, PostgreSQL, Tailwind CSS.", all used in the projects (Python, FastAPI and PostgreSQL in SecretSentinel and VoicePath; React in all four; Next.js and TypeScript in VoicePath; Tailwind CSS in three).
 - [x] Verify:
   - [x] Lint clean, `next build` passes, `tsc --noEmit` clean
   - [x] All 77 browser tests pass, with the new tile check
