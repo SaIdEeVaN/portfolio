@@ -8,7 +8,7 @@ import { pageMetadata } from "../lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Skills",
   description:
-    "Tools and technologies Baviri Setty Sai Deevan works with, from Linux, Nmap, Wireshark and Metasploit to Python, React, Next.js and Django.",
+    "Tools and technologies Baviri Setty Sai Deevan works with, grouped into languages, frontend, backend and data, testing, CI and hosting, and security, each with the projects it is used in.",
   path: "/skills",
 });
 
@@ -17,7 +17,7 @@ export default function SkillsPage() {
     <>
       <PageHeader
         page={getPage("/skills")}
-        lede="Tools and technologies I'm comfortable using."
+        lede="What I build with, and the projects I used it in."
       />
 
       <section className="page-body page-body--ink on-ink">

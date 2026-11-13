@@ -11,7 +11,30 @@ Last updated: 2026-11-13
 - Every icon, font and image is served by the site itself; the tests fail on any request to another site.
 - `CLAUDE.md` holds the working rules for Claude: push straight to `main`, the checks to run, where things live and how to add a project.
 - Experience lists Technology Executive, Blockchain Innovation Club (Jul 2026 – Present). The role links to `/projects/bic-rec`.
+- Skills are grouped (Languages, Frontend, Backend and data, Testing, CI and hosting, Security and systems), and each skill links to the projects that use it.
 - Spec motion (reveals, parallax, magnets, cursor, scramble, page wipe) is native CSS/JS; library animations from Motion, Kokonut UI and Bklit UI sit on top.
+
+## Done: rebuild the Skills page around the projects (on `main`)
+
+Sai asked for the Skills page to follow the projects. It was one flat grid of 20 logos, with no link to any project; FastAPI, PostgreSQL, GitHub Actions and Playwright, among others, were missing, while Django, MySQL and MongoDB are used in none of the four projects.
+
+- [x] Map each skill to the projects that use it, from the repos: SecretSentinel at `cfee50a`, the chess engine at `76e66eb`, VoicePath at `12fd4ef` (pulled the newest commits first), and the Blockchain Innovation Club site from its case study (the repo is private and was read for that page). Points worth knowing:
+  - [x] JavaScript is the chess engine, the club site and SecretSentinel's dashboard; VoicePath's 1,232 bytes of `.mjs` build scripts don't count. TypeScript is VoicePath only (the chess engine lists `typescript` as a dependency but its code is JavaScript).
+  - [x] Docker is VoicePath's `backend/Dockerfile`, which exists for hosts that take an image; Render itself builds VoicePath from Python commands, so the tile doesn't claim a Docker deploy.
+  - [x] React includes VoicePath (Next.js runs on React 19).
+  - [x] Gitleaks has no icon in devicon or Simple Icons, and its repo has none (the README logo is ASCII art), so it isn't a tile; the SecretSentinel page covers it.
+- [x] Five groups, each with its own heading: Languages (12), Frontend (6), Backend and data (7), Testing, CI and hosting (8), Security and systems (4). 37 skills, 51 project links.
+- [x] Each tile lists "Used in" and the projects, newest first, each linking to its page (with the page wipe). Skills no project uses (Java, C, C++, R, Django, MySQL, MongoDB, Linux, Nmap, Wireshark, Metasploit) stay, with no project line. A slug that names no project throws at build time.
+- [x] 17 new icons in `public/skills`: from devicon 2.17.0, FastAPI, Vite, PostgreSQL, Supabase, SQLite, Docker, GitHub Actions, Playwright, pytest, Firebase, Vercel, PowerShell, Solidity and React Router; from Simple Icons 16.32.0, Render, PyPI and MapLibre. Taken from the npm packages, as before, and checked for scripts and external references (none).
+- [x] Copy: the lede and the Skills blurb now read "What I build with, and the projects I used it in."; the metadata description names the groups.
+- [x] Fixed a bug the old tests missed: at 320px, JavaScript, TypeScript, Wireshark and Metasploit already ran 12–17px past their tiles, and the new PowerShell, PostgreSQL and Playwright ran past at 320 and 360px. Below 460px the tile name is now `min(17px, 4vw)`. The browser tests now also fail when a skill's name ends outside its tile; checked that they caught all seven before the fix.
+- [x] Also fixed: VoicePath's Normalization step said `multilingual-e5-base`; since Nov 10 it runs `multilingual-e5-small` as int8 ONNX on its own server. Its "ranking imports no LLM" rule still holds after the Nov 9 matching rework.
+- [ ] Not changed: the home page's "Stack" line ("React / Next.js, Django, Python, C/C++, SQL, Tailwind CSS.") — asked Sai first.
+- [x] Verify:
+  - [x] Lint clean, `next build` passes, `tsc --noEmit` clean
+  - [x] All 77 browser tests pass, with the new tile check
+  - [x] `/skills` checked in Chromium at 1440 and 320px after scrolling the whole page: all 37 icons load, no failed requests; hover still reads; names and project lists fit at 320px
+- [x] Update CLAUDE.md and STATUS.md, commit, push to `main`
 
 ## Done: add SecretSentinel to Projects (on `main`)
 
@@ -264,3 +287,4 @@ Picked because they fit the neo-brutalist look or show real data. Bklit UI is a 
 - When GitHub's language API can't be reached, languages are counted from the repo by extension the way GitHub does, after checking that count against an earlier GitHub figure where there is one (SecretSentinel had none). SQL files only count as PLpgSQL where GitHub counted them; plain SQL is data and left out.
 - A project name in a display title goes through `ProjectName`, which lets a joined-up name break between its words. Plain names everywhere else.
 - A published package gets a "View on PyPI" button (`pypiUrl`), not the "Open live demo" one.
+- A skill lists only projects whose repo shows it in use. Skills with no project stay on the page, with no project line.

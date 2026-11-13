@@ -277,7 +277,7 @@ export const PROJECTS: Project[] = [
       {
         title: "Normalization",
         text: "Extracted skills are mapped to taxonomy ids using multilingual embeddings.",
-        tool: "multilingual-e5-base",
+        tool: "multilingual-e5-small",
       },
       {
         title: "Matching",

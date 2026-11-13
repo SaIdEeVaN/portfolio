@@ -39,7 +39,7 @@ export const PAGES = [
     slug: "skills",
     label: "Skills",
     accent: "ink",
-    blurb: "Tools and technologies I'm comfortable using.",
+    blurb: "What I build with, and the projects I used it in.",
   },
   {
     href: "/contact",

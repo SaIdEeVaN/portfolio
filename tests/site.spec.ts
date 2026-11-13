@@ -66,6 +66,17 @@ async function findOverflow(page: Page) {
         problems.push(`${describe(heading)} text is ${heading.scrollWidth}px in ${heading.clientWidth}px`);
       }
     }
+    // A skill's name is one word in a narrow tile: it must end inside the tile's padding.
+    for (const name of document.querySelectorAll(".tile__name")) {
+      const tile = name.closest(".tile")!;
+      const style = getComputedStyle(tile);
+      const inner =
+        tile.getBoundingClientRect().right - parseFloat(style.paddingRight) - parseFloat(style.borderRightWidth);
+      const right = name.getBoundingClientRect().right;
+      if (right > inner + 1) {
+        problems.push(`${describe(name)} runs ${Math.round(right - inner)}px past its tile`);
+      }
+    }
     return problems.slice(0, 10);
   });
 }

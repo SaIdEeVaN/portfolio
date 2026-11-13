@@ -27,7 +27,8 @@ npm run test:e2e     # Playwright browser tests against the production build
 
 The browser tests (`tests/site.spec.ts`) open every page and every project page at 320, 360, 390,
 768 and 1440px, and at 390px with reduced motion. They fail if anything runs past the right edge,
-a heading is wider than its box, or the console logs an error. They also check each page's title,
+a heading is wider than its box, a skill's name runs past its tile, or the console logs an
+error. They also check each page's title,
 the project pages' share tags and preview images, the 404 for an unknown project, the sitemap, and
 the links into project pages. Any request to another site fails them too, since every icon,
 font and image is served by this site.
@@ -78,8 +79,11 @@ whether it looks right.
      `/projects`, the next-project links and the sitemap entry all follow from the entry.
 3. Update the copy that names the projects: the Projects `blurb` in `src/app/lib/pages.ts` and
    the `description` in `src/app/projects/page.tsx`.
-4. Run the checks and browser tests, then look at the new project page, `/projects` and the home
-   page's featured project yourself.
+4. On the Skills page (`src/app/components/SkillsLogoGrid.tsx`), add the project's slug to every
+   skill it uses, checked against the repo, and add a skill (with its icon in `public/skills`)
+   for any tool it introduces. A slug that names no project fails the build.
+5. Run the checks and browser tests, then look at the new project page, `/projects`, the home
+   page's featured project and `/skills` yourself.
 
 ## Conventions
 
