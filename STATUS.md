@@ -21,7 +21,7 @@ Code at https://github.com/SaIdEeVaN/secretsentinel, package at https://pypi.org
 - [x] New `secretsentinel` entry, first in the list (newest first), so it is now the home page's featured project
   - [x] Name "SecretSentinel", not the package name `secretsentinel-scanner`
   - [x] Tags: Python, Gitleaks, FastAPI, React, GitHub Actions, PyPI, Postgres
-  - [x] Four facts: Year, Package (secretsentinel-scanner 1.0.0, Python 3.11+), Scanner (Gitleaks 8.30.1 plus 20 rules of its own), Dashboard (FastAPI and React, local or self-hosted). No Role fact: not confirmed with Sai.
+  - [x] Four facts: Year, Role, Package (secretsentinel-scanner 1.0.0, Python 3.11+), Scanner (Gitleaks 8.30.1 plus 20 rules of its own). Role was left out at first; Sai then confirmed it was a solo build, so "Role: Sole developer" replaced the Dashboard fact (FastAPI and React are still in the tags, and the description covers the dashboard). Sai also confirmed SecretSentinel stays the featured project.
   - [x] Rules counted in `web3_rules.toml`: 21 entries, which are 18 Web3 rules, the 2 gap rules the changelog names, and an allowlist added to Gitleaks' own `generic-api-key`
   - [x] Languages counted from the repo the way GitHub does (its API wasn't reachable for this repo; none of the large files are bundled or minified): Python 413,664, JavaScript 194,597, Shell 9,371, PowerShell 8,966, CSS 6,178. Solidity (4,497) is sixth.
   - [x] How it works: scan → Web3 rules → redact → policy → report

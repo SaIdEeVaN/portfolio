@@ -37,9 +37,9 @@ export const PROJECTS: Project[] = [
     pypiUrl: "https://pypi.org/project/secretsentinel-scanner/",
     facts: [
       { label: "Year", value: "2026" },
+      { label: "Role", value: "Sole developer" },
       { label: "Package", value: "secretsentinel-scanner 1.0.0 on PyPI, Python 3.11+" },
       { label: "Scanner", value: "Gitleaks 8.30.1 plus 20 rules of its own" },
-      { label: "Dashboard", value: "FastAPI and React, run locally or self-hosted" },
     ],
     // Top five languages (bytes) at cfee50a, counted from the repo the way GitHub does; its
     // API wasn't reachable. Solidity (4,497) is sixth.
